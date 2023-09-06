@@ -1,7 +1,7 @@
 package dev.aidang.encounters.repository;
 
 import dev.aidang.encounters.model.Encounter;
-import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.repository.CrudRepository;
 
-public interface EncounterRepository extends JpaRepository<Encounter, Long> {
+public interface EncounterRepository extends CrudRepository<Encounter, Long> {
 }
