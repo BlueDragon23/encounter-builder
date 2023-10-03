@@ -1,0 +1,82 @@
+{
+  "name": "Air Elemental",
+  "nameAlt": [
+    "Elemental, Air"
+  ],
+  "source": [
+    [
+      "SRD",
+      305
+    ],
+    [
+      "M",
+      124
+    ]
+  ],
+  "size": 2,
+  "type": "Elemental",
+  "alignment": "Neutral",
+  "ac": 15,
+  "hp": 90,
+  "hd": [
+    12,
+    10
+  ],
+  "speed": "fly 90 ft (hover)",
+  "scores": [
+    14,
+    20,
+    14,
+    6,
+    10,
+    6
+  ],
+  "damage_resistances": "lightning; thunder; bludgeoning, piercing, and slashing from nonmagical weapons",
+  "damage_immunities": "poison",
+  "condition_immunities": "exhaustion, grappled, paralyzed, petrified, poisoned, prone, restrained, unconscious",
+  "senses": "Darkvision 60 ft",
+  "passivePerception": 10,
+  "languages": "Auran",
+  "challengeRating": "5",
+  "proficiencyBonus": 3,
+  "attacksAction": 2,
+  "attacks": [
+    {
+      "name": "Slam",
+      "ability": 2,
+      "damage": [
+        2,
+        8,
+        "bludgeoning"
+      ],
+      "range": "Melee (5 ft)",
+      "description": "Two slam attacks as an Attack action"
+    },
+    {
+      "name": "Whirlwind (Recharge 4-6)",
+      "ability": 1,
+      "damage": [
+        3,
+        8,
+        "bludgeoning"
+      ],
+      "range": "All in shared area",
+      "dc": true,
+      "description": "Str save; fail\u2015 flung 20 ft random direction, prone; success\u2015 half damage",
+      "tooltip": "Each creature in the elemental's space that fails its saving throw is flung up to 20 ft away from the elemental in a random direction and knocked prone. If a thrown target strikes an object, such as a wall or floor, the target takes 3 (1d6) bludgeoning damage for every 10 ft it was thrown. If the target is thrown at another creature, that creature must succeed on a DC 13 Dexterity saving throw or take the same damage and be knocked prone.\nIf the saving throw is successful, the target takes half the bludgeoning damage and isn't flung away or knocked prone."
+    }
+  ],
+  "traits": [
+    {
+      "name": "Air Form",
+      "description": "The elemental can enter a hostile creature's space and stop there. It can move through a space as narrow as 1 inch wide without squeezing."
+    }
+  ],
+  "actions": [
+    {
+      "name": "Whirlwind (Recharge 4-6)",
+      "description": "See Attack. Each creature in the elemental's space that fails its saving throw is flung up to 20 ft away from the elemental in a random direction and knocked prone. If a thrown target strikes an object, such as a wall or floor, the target takes 3 (1d6) bludgeoning damage for every 10 ft it was thrown. If the target is thrown at another creature, that creature must succeed on a DC 13 Dexterity saving throw or take the same damage and be knocked prone.\nIf the saving throw is successful, the target takes half the bludgeoning damage and isn't flung away or knocked prone."
+    }
+  ],
+  "wildshapeString": "Darkvision 60 ft| Knows Auran| Resistant to: lightning, thunder, and bludgeoning, piercing, and slashing from nonmagical weapons| Immune to: poison, exhaustion, grappled, paralyzed, petrified, poisoned, prone, restrained, unconscious| Air Form: can move through 1 inch wide space without squeezing and can move through and stop in space of hostiles| Whirlwind: see Monster Manual page 124"
+}

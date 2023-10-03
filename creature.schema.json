@@ -1,0 +1,167 @@
+{
+  "$id": "https://example.com/creature.schema.json",
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Creature",
+  "type": "object",
+  "properties": {
+    "name": {
+      "description": "The creatures name.",
+      "type": "string"
+    },
+    "nameAlt": {
+      "description": "Alternate names, useful for searching.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "source": {
+      "description": "The source book to find the creature.",
+      "type": "array",
+      "items": {
+        "oneOf": [
+          {
+            "type": "string"
+          },
+          {
+            "type": "number"
+          }
+        ]
+      }
+    },
+    "size": {
+      "description": "Size of the creature. 0 being Tiny, 4 being Huge",
+      "type": "number"
+    },
+    "type": {
+      "description": "The creature type.",
+      "type": "string"
+    },
+    "alignment": {
+      "description": "The creatures alignment.",
+      "type": "string"
+    },
+    "ac": {
+      "description": "Armor class",
+      "type": "number"
+    },
+    "hp": {
+      "description": "Hitpoints",
+      "type": "number"
+    },
+    "hd": {
+      "description": "Hitpoint dice.",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "speed": {
+      "description": "Movement speed.",
+      "type": "string"
+    },
+    "scores": {
+      "description": "Ability scores, in SDCIWC order",
+      "type": "array",
+      "items": {
+        "type": "number"
+      }
+    },
+    "damage_resistances": {
+      "type": "string",
+      "description": "Types of damage the creature resists"
+    },
+    "damage_immunities": {
+      "type": "string",
+      "description": "Types of damage the creature is immune to"
+    },
+    "condition_immunities": {
+      "type": "string",
+      "description": "Conditions the creature can't be afflicted with"
+    },
+    "senses": {
+      "type": "string",
+      "description": "What unusual senses"
+    },
+    "passivePerception": {
+      "type": "number",
+      "description": "The passive perception stat"
+    },
+    "languages": {
+      "type": "string",
+      "description": "Languages spoken"
+    },
+    "challengeRating": {
+      "type": "string",
+      "description": "The CR"
+    },
+    "proficiencyBonus": {
+      "type": "number",
+      "description": "Proficiency bonus"
+    },
+    "attacksAction": {
+      "type": "number",
+      "description": "The number of attacks a creature can make"
+    },
+    "attacks": {
+      "type": "array",
+      "description": "The list of attacks available",
+      "items": {
+        "ref": "#/$defs/attack"
+      }
+    },
+    "traits": {
+      "type": "array",
+      "description": "Any other traits a creature possesses",
+      "items": {
+        "type": "object"
+      }
+    }
+  },
+  "$defs": {
+    "attack": {
+      "type": "object",
+      "required": [
+        "name",
+        "damage",
+        "range"
+      ],
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Attack name."
+        },
+        "ability": {
+          "type": "number",
+          "description": "?"
+        },
+        "damage": {
+          "type": "array",
+          "description": "The damage done from an attack. Items consist of number of dice, dice type, damage type",
+          "items": {
+            "oneOf": [
+              {
+                "type": "number"
+              },
+              {
+                "type": "string"
+              }
+            ]
+          }
+        },
+        "range": {
+          "type": "string",
+          "description": "Range of the attack"
+        },
+        "dc": {
+          "type": "boolean",
+          "description": "Whether the attack has a saving throw associated"
+        },
+        "description": {
+          "type": "string",
+          "description": "Describe the attack"
+        }
+      }
+    }
+  }
+}
