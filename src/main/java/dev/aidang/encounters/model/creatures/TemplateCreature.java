@@ -2,6 +2,8 @@ package dev.aidang.encounters.model.creatures;
 
 import dev.aidang.encounters.model.Dice;
 import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.Embedded;
+import org.springframework.data.relational.core.mapping.MappedCollection;
 
 import java.util.List;
 
@@ -17,10 +19,12 @@ public record TemplateCreature(
         String alignment,
         int armorClass,
         int hitpoints,
-        Dice hitDice,
-        Speed speed,
-        AbilityScores abilityScores,
-        List<Attack> attacks) {
+        @Embedded.Empty(prefix = "dice_") Dice hitDice,
+        @Embedded.Empty(prefix = "speed_") Speed speed,
+        @Embedded.Empty(prefix = "ability_") AbilityScores abilityScores,
+        // TODO: child tables?
+        @MappedCollection List<Attack> attacks,
+        List<Abilities> savingThrows) {
 
     public static Builder builder(String name) {
         return new Builder(name);
@@ -36,7 +40,9 @@ public record TemplateCreature(
                 .withHitpoints(hitpoints)
                 .withHitDice(hitDice)
                 .withSpeed(speed)
-                .withAbilityScores(abilityScores);
+                .withAttacks(attacks)
+                .withAbilityScores(abilityScores)
+                .withSavingThrows(savingThrows);
     }
 
     public static final class Builder {
@@ -53,9 +59,15 @@ public record TemplateCreature(
         private Speed speed;
         private AbilityScores abilityScores;
         private List<Attack> attacks;
+        private List<Abilities> savingThrows;
 
         private Builder(String name) {
             this.name = name;
+        }
+
+        public Builder withId(Long id) {
+            this.id = id;
+            return this;
         }
 
         public Builder withDescription(String description) {
@@ -108,6 +120,11 @@ public record TemplateCreature(
             return this;
         }
 
+        public Builder withSavingThrows(List<Abilities> abilities) {
+            this.savingThrows = abilities;
+            return this;
+        }
+
         public TemplateCreature build() {
             return new TemplateCreature(
                     id,
@@ -121,7 +138,8 @@ public record TemplateCreature(
                     hitDice,
                     speed,
                     abilityScores,
-                    attacks);
+                    attacks,
+                    savingThrows);
         }
     }
 }

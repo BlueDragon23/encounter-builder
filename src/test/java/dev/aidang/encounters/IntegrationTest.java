@@ -11,6 +11,5 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 @Retention(RetentionPolicy.RUNTIME)
 @Import(TestEncountersApplication.class)
-@SpringBootTest
-public @interface IntegrationTest {
-}
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
+public @interface IntegrationTest {}

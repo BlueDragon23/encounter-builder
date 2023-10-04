@@ -4,6 +4,7 @@ import dev.aidang.encounters.IntegrationTest;
 import dev.aidang.encounters.model.Encounter;
 import org.junit.jupiter.api.Test;
 import org.springframework.http.HttpStatus;
+import org.springframework.util.MimeTypeUtils;
 
 import java.io.IOException;
 import java.net.URI;
@@ -21,19 +22,20 @@ class EncounterControllerIT extends RestTestBase {
     void testCreateEncounter() throws IOException, InterruptedException {
         // when
         Encounter requestEncounter = new Encounter(null, "name", "description");
-        HttpRequest request = HttpRequest
-                .newBuilder()
+        HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:" + port + "/encounter"))
+                .header("Content-Type", MimeTypeUtils.APPLICATION_JSON_VALUE)
                 .POST(HttpRequest.BodyPublishers.ofString(JSON.writeValueAsString(requestEncounter)))
                 .build();
 
         // then rest request
-        HttpResponse<String> response = httpClient.send(request,
-                HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
+        HttpResponse<String> response =
+                httpClient.send(request, HttpResponse.BodyHandlers.ofString(StandardCharsets.UTF_8));
 
         // verify
         assertThat(response.statusCode()).isEqualTo(HttpStatus.CREATED.value());
         Encounter responseEncounter = JSON.readValue(response.body(), Encounter.class);
-        assertThat(responseEncounter).isEqualTo(requestEncounter);
+        assertThat(responseEncounter.description()).isEqualTo(requestEncounter.description());
+        assertThat(responseEncounter.name()).isEqualTo(requestEncounter.name());
     }
 }

@@ -1,8 +1,12 @@
 package dev.aidang.encounters.model.creatures;
 
-import dev.aidang.encounters.model.Dice;
+import org.springframework.data.annotation.Id;
+import org.springframework.data.relational.core.mapping.MappedCollection;
 
-public record Attack(String name, String description, Dice damage, DamageType damageType, String range) {
+import java.util.List;
+
+public record Attack(
+        @Id Long id, String name, String description, @MappedCollection List<Damage> damage, String range) {
 
     public static Builder builder() {
         return new Builder();
@@ -13,16 +17,20 @@ public record Attack(String name, String description, Dice damage, DamageType da
                 .withName(name)
                 .withDescription(description)
                 .withDamage(damage)
-                .withDamageType(damageType)
                 .withRange(range);
     }
 
     public static final class Builder {
+        private Long id;
         private String name;
         private String description;
-        private Dice damage;
-        private DamageType damageType;
+        private List<Damage> damage;
         private String range;
+
+        public Builder withId(Long id) {
+            this.id = id;
+            return this;
+        }
 
         public Builder withName(String name) {
             this.name = name;
@@ -34,13 +42,8 @@ public record Attack(String name, String description, Dice damage, DamageType da
             return this;
         }
 
-        public Builder withDamage(Dice damage) {
+        public Builder withDamage(List<Damage> damage) {
             this.damage = damage;
-            return this;
-        }
-
-        public Builder withDamageType(DamageType damageType) {
-            this.damageType = damageType;
             return this;
         }
 
@@ -50,7 +53,7 @@ public record Attack(String name, String description, Dice damage, DamageType da
         }
 
         public Attack build() {
-            return new Attack(name, description, damage, damageType, range);
+            return new Attack(id, name, description, damage, range);
         }
     }
 }

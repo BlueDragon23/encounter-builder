@@ -1,0 +1,49 @@
+@startuml
+
+entity TemplateCreature {
+  * **id: int <<generated>>**
+  * name: text
+  * description: text
+  * hitpoints: int
+  * creatureSize: creature_size
+  * type: text
+  * alignment: text
+  * armorClass: int
+  * dice_die: text
+  * dice_count: int
+  --
+  * speed_walk: int
+  * speed_climb: int
+  * speed_fly: int
+  * speed_swim: int
+  --
+  * ability_strength: int
+  * ability_dexterity: int
+  * ability_consititution: int
+  * ability_intelligence: int
+  * ability_wisdom: int
+  * ability_charisma: int
+  --
+  * attackIds: List<int>
+  * savingThrows: List<String>
+}
+
+entity Attack {
+  * id: int <<generated>>
+  * name: text
+  * description: text
+  * damageIds: List<string>
+  * range: text
+}
+
+entity Damage {
+  * id: int <<generated>>
+  * die: die
+  * count: int
+  * damageType: damage_type
+}
+
+TemplateCreature::attack_ids -> Attack::id
+Attack::damage_ids -> Damage::id
+
+@enduml

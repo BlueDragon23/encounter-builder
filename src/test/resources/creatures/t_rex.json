@@ -1,0 +1,72 @@
+{
+  "name": "Tyrannosaurus Rex",
+  "nameAlt": [
+    "T-Rex"
+  ],
+  "source": [
+    [
+      "SRD",
+      279
+    ],
+    [
+      "M",
+      79
+    ]
+  ],
+  "size": 1,
+  "type": "Beast",
+  "alignment": "Unaligned",
+  "ac": 13,
+  "hp": 136,
+  "hd": [
+    13,
+    12
+  ],
+  "speed": "50 ft",
+  "scores": [
+    25,
+    10,
+    19,
+    2,
+    12,
+    9
+  ],
+  "skills": {
+    "perception": 4
+  },
+  "senses": "",
+  "passivePerception": 14,
+  "challengeRating": "8",
+  "proficiencyBonus": 3,
+  "attacksAction": 2,
+  "attacks": [
+    {
+      "name": "Bite",
+      "ability": 1,
+      "damage": [
+        4,
+        12,
+        "piercing"
+      ],
+      "range": "Melee (10 ft)",
+      "description": "Medium or smaller target is grappled and restrained (escape DC 17); Can't use bite again until grapple ends"
+    },
+    {
+      "name": "Tail",
+      "ability": 1,
+      "damage": [
+        3,
+        8,
+        "bludgeoning"
+      ],
+      "range": "Melee (10 ft)",
+      "description": "One bite and one tail attack to different targets as an Attack action"
+    }
+  ],
+  "traits": [
+    {
+      "name": "Multiattack",
+      "description": "The tyrannosaurus makes two attacks: one with its bite and one with its tail. It can't make both attacks against the same target."
+    }
+  ]
+}
