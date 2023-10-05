@@ -11,6 +11,7 @@ import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
+import java.util.List;
 
 import static dev.aidang.encounters.Utils.JSON;
 import static org.assertj.core.api.Assertions.assertThat;
@@ -21,7 +22,7 @@ class EncounterControllerIT extends RestTestBase {
     @Test
     void testCreateEncounter() throws IOException, InterruptedException {
         // when
-        Encounter requestEncounter = new Encounter(null, "name", "description");
+        Encounter requestEncounter = new Encounter(null, "name", "description", List.of());
         HttpRequest request = HttpRequest.newBuilder()
                 .uri(URI.create("http://localhost:" + port + "/encounter"))
                 .header("Content-Type", MimeTypeUtils.APPLICATION_JSON_VALUE)

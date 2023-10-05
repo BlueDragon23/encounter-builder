@@ -14,4 +14,48 @@ public record Damage(@Id Long id, Die die, int count, DamageType damageType) {
     public Damage(Die die, int count, DamageType damageType) {
         this(null, die, count, damageType);
     }
+
+    public static Builder builder() {
+        return new Builder();
+    }
+
+    public Builder toBuilder() {
+        return new Builder().withId(id).withDie(die).withCount(count).withDamageType(damageType);
+    }
+
+    public static class Builder {
+
+        private Long id;
+        private Die die;
+        private int count;
+        private DamageType damageType;
+
+        private Builder() {
+            // Do nothing
+        }
+
+        public Builder withId(Long id) {
+            this.id = id;
+            return this;
+        }
+
+        public Builder withDie(Die die) {
+            this.die = die;
+            return this;
+        }
+
+        public Builder withCount(int count) {
+            this.count = count;
+            return this;
+        }
+
+        public Builder withDamageType(DamageType damageType) {
+            this.damageType = damageType;
+            return this;
+        }
+
+        public Damage build() {
+            return new Damage(id, die, count, damageType);
+        }
+    }
 }

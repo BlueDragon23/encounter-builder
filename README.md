@@ -8,3 +8,11 @@ enough to accommodate other systems with similar mechanics.
 Creatures can be imported using a format taken from More Purple More Better (MPMB).
 An example from their code can be found
 here (https://github.com/morepurplemorebetter/MPMBs-Character-Record-Sheet/blob/master/_variables/ListsCreatures.js).
+
+## Encounters
+
+TODO: Creating an encounter
+
+## Running an encounter
+
+TODO: Running an encounter

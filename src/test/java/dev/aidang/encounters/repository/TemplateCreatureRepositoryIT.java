@@ -1,48 +1,82 @@
 package dev.aidang.encounters.repository;
 
 import dev.aidang.encounters.IntegrationTest;
-import dev.aidang.encounters.model.Dice;
-import dev.aidang.encounters.model.Die;
-import dev.aidang.encounters.model.creatures.*;
+import dev.aidang.encounters.TestEncountersApplication;
+import dev.aidang.encounters.model.creatures.TemplateCreature;
+import org.jetbrains.annotations.NotNull;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import java.util.List;
+import java.util.Optional;
+import java.util.stream.IntStream;
 
+import static dev.aidang.encounters.TestUtils.getTemplateCreature;
+import static java.util.stream.Collectors.toList;
 import static org.assertj.core.api.Assertions.assertThat;
 
 @IntegrationTest
 public class TemplateCreatureRepositoryIT {
 
     @Autowired
-    private TemplateCreatureRepository templateCreatureRepository;
+    private TestEncountersApplication.TestHelper testHelper;
+
+    @Autowired
+    private TemplateCreatureRepository sut;
+
+    @BeforeEach
+    void setup() {
+        testHelper.teardown();
+    }
 
     @Test
     void testSave() {
         // when
-        TemplateCreature expected = TemplateCreature.builder("Adult Black Dragon")
-                .withCreatureSize(CreatureSize.HUGE)
-                .withArmorClass(19)
-                .withHitpoints(195)
-                .withHitDice(new Dice(Die.D12, 17))
-                .withAlignment("Chaotic Evil")
-                .withSpeed(new Speed(40, 0, 80, 40))
-                .withAbilityScores(new AbilityScores(23, 14, 21, 14, 13, 17))
-                .withSavingThrows(
-                        List.of(Abilities.DEXTERITY, Abilities.CONSTITUTION, Abilities.WISDOM, Abilities.CHARISMA))
-                .withAttacks(List.of(Attack.builder()
-                        .withName("Bite")
-                        .withRange("Melee (10 ft)")
-                        .withDamage(List.of(
-                                new Damage(Die.D10, 2, DamageType.PIERCING), new Damage(Die.D8, 1, DamageType.ACID)))
-                        .build()))
-                .build();
+        TemplateCreature expected = getTemplateCreature().build();
 
         // then
-        TemplateCreature saved = templateCreatureRepository.save(expected);
+        TemplateCreature saved = sut.save(expected);
 
         // verify
-        // TODO: ignore generated IDs
-        assertThat(saved).isEqualTo(expected.toBuilder().withId(saved.id()).build());
+        assertThat(saved).isEqualTo(withSavedIds(expected, saved));
+    }
+
+    @Test
+    void testFind() {
+        // when
+        TemplateCreature expected = getTemplateCreature().build();
+        TemplateCreature saved = sut.save(expected);
+
+        // then
+        Optional<TemplateCreature> result = sut.findById(saved.id());
+
+        // verify
+        assertThat(result).hasValue(saved);
+    }
+
+    @NotNull
+    private static TemplateCreature withSavedIds(TemplateCreature expected, TemplateCreature saved) {
+        return expected.toBuilder()
+                .withId(saved.id())
+                .withAttacks(IntStream.range(0, expected.attacks().size())
+                        .mapToObj(i -> expected.attacks().get(i).toBuilder()
+                                .withId(saved.attacks().get(i).id())
+                                .withDamage(IntStream.range(
+                                                0,
+                                                expected.attacks()
+                                                        .get(i)
+                                                        .damage()
+                                                        .size())
+                                        .mapToObj(j -> expected.attacks().get(i).damage().get(j).toBuilder()
+                                                .withId(saved.attacks()
+                                                        .get(i)
+                                                        .damage()
+                                                        .get(j)
+                                                        .id())
+                                                .build())
+                                        .collect(toList()))
+                                .build())
+                        .collect(toList()))
+                .build();
     }
 }
