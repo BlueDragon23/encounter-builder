@@ -6,7 +6,5 @@ import org.junit.jupiter.api.Test;
 class EncountersApplicationTests {
 
     @Test
-    void contextLoads() {
-    }
-
+    void contextLoads() {}
 }

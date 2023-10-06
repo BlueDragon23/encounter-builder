@@ -1,9 +1,8 @@
 package dev.aidang.encounters.model.creatures;
 
+import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.MappedCollection;
-
-import java.util.List;
 
 public record Attack(
         @Id Long id, String name, String description, @MappedCollection List<Damage> damage, String range) {

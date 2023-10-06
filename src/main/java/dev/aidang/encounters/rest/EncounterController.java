@@ -3,12 +3,11 @@ package dev.aidang.encounters.rest;
 import dev.aidang.encounters.NotFoundException;
 import dev.aidang.encounters.model.Encounter;
 import dev.aidang.encounters.repository.EncounterRepository;
+import java.net.URI;
+import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-
-import java.net.URI;
-import java.util.stream.StreamSupport;
 
 @RestController
 public class EncounterController {

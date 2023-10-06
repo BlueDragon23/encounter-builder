@@ -1,11 +1,11 @@
 package dev.aidang.encounters.service;
 
+import static dev.aidang.encounters.Utils.JSON;
+
 import dev.aidang.encounters.model.Dice;
 import dev.aidang.encounters.model.Die;
 import dev.aidang.encounters.model.creatures.*;
 import dev.aidang.encounters.repository.TemplateCreatureRepository;
-import org.springframework.stereotype.Component;
-
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
@@ -13,8 +13,7 @@ import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
-
-import static dev.aidang.encounters.Utils.JSON;
+import org.springframework.stereotype.Component;
 
 @Component
 public class TemplateCreatureService {

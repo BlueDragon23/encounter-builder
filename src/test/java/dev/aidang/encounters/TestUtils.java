@@ -3,7 +3,6 @@ package dev.aidang.encounters;
 import dev.aidang.encounters.model.Dice;
 import dev.aidang.encounters.model.Die;
 import dev.aidang.encounters.model.creatures.*;
-
 import java.util.List;
 
 public class TestUtils {

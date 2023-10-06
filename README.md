@@ -11,7 +11,7 @@ here (https://github.com/morepurplemorebetter/MPMBs-Character-Record-Sheet/blob/
 
 ## Encounters
 
-TODO: Creating an encounter
+An encounter can be created and saved.
 
 ## Running an encounter
 

@@ -1,11 +1,10 @@
 package dev.aidang.encounters.model.creatures;
 
 import dev.aidang.encounters.model.Dice;
+import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Embedded;
 import org.springframework.data.relational.core.mapping.MappedCollection;
-
-import java.util.List;
 
 /**
  * Need to have a "template" creature for building, then a "live" creature for running encounter

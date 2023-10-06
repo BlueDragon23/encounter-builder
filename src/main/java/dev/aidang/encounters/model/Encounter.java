@@ -1,9 +1,8 @@
 package dev.aidang.encounters.model;
 
+import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.MappedCollection;
-
-import java.util.List;
 
 public record Encounter(
         @Id Long id, String name, String description, @MappedCollection List<EncounterCreatureRef> creatures) {

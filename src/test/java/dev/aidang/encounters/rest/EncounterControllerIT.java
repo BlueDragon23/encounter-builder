@@ -1,20 +1,19 @@
 package dev.aidang.encounters.rest;
 
+import static dev.aidang.encounters.Utils.JSON;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import dev.aidang.encounters.IntegrationTest;
 import dev.aidang.encounters.model.Encounter;
-import org.junit.jupiter.api.Test;
-import org.springframework.http.HttpStatus;
-import org.springframework.util.MimeTypeUtils;
-
 import java.io.IOException;
 import java.net.URI;
 import java.net.http.HttpRequest;
 import java.net.http.HttpResponse;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
-
-import static dev.aidang.encounters.Utils.JSON;
-import static org.assertj.core.api.Assertions.assertThat;
+import org.junit.jupiter.api.Test;
+import org.springframework.http.HttpStatus;
+import org.springframework.util.MimeTypeUtils;
 
 @IntegrationTest
 class EncounterControllerIT extends RestTestBase {

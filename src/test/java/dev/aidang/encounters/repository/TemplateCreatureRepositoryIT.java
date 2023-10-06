@@ -1,19 +1,18 @@
 package dev.aidang.encounters.repository;
 
+import static dev.aidang.encounters.TestUtils.getTemplateCreature;
+import static java.util.stream.Collectors.toList;
+import static org.assertj.core.api.Assertions.assertThat;
+
 import dev.aidang.encounters.IntegrationTest;
 import dev.aidang.encounters.TestEncountersApplication;
 import dev.aidang.encounters.model.creatures.TemplateCreature;
+import java.util.Optional;
+import java.util.stream.IntStream;
 import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-
-import java.util.Optional;
-import java.util.stream.IntStream;
-
-import static dev.aidang.encounters.TestUtils.getTemplateCreature;
-import static java.util.stream.Collectors.toList;
-import static org.assertj.core.api.Assertions.assertThat;
 
 @IntegrationTest
 public class TemplateCreatureRepositoryIT {

@@ -3,6 +3,7 @@ plugins {
     id("org.springframework.boot") version "3.1.1"
     id("io.spring.dependency-management") version "1.1.0"
     id("com.diffplug.spotless") version "6.19.0"
+    id("com.github.node-gradle.node") version "7.0.1"
 }
 
 group = "dev.aidang"
@@ -16,6 +17,10 @@ spotless {
     java {
         palantirJavaFormat()
     }
+}
+
+node {
+    nodeProjectDir.set(file("${projectDir}/svelte"))
 }
 
 repositories {
@@ -37,3 +42,12 @@ dependencies {
 tasks.withType<Test> {
     useJUnitPlatform()
 }
+
+tasks.processResources {
+    dependsOn("npm_run_build")
+    from("svelte/build") {
+        into("static")
+    }
+}
+
+

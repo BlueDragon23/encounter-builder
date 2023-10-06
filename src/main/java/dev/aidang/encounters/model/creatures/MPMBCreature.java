@@ -1,7 +1,6 @@
 package dev.aidang.encounters.model.creatures;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
-
 import java.util.List;
 import java.util.Objects;
 
