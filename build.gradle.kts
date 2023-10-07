@@ -13,6 +13,14 @@ java {
     sourceCompatibility = JavaVersion.VERSION_17
 }
 
+tasks.jar {
+    manifest {
+        attributes(
+                "Main-Class" to "dev.aidang.encounters.EncountersApplication"
+        )
+    }
+}
+
 spotless {
     java {
         palantirJavaFormat()
