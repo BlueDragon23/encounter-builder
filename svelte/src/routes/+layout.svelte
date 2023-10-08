@@ -1,7 +1,21 @@
-<nav>
-	<a href="/">Home</a>
-	<a href="/encounters">Encounters</a>
-	<a href="/settings">Settings</a>
-</nav>
+<script>
+	import '../app.postcss';
+	import { AppShell, AppBar, TabGroup, TabAnchor } from '@skeletonlabs/skeleton';
+</script>
 
-<slot />
+<AppShell>
+	<svelte:fragment slot="pageHeader">
+		<AppBar>
+			<div class="text-token">
+				<TabGroup>
+					<TabAnchor href="/" name="Home">Home</TabAnchor>
+					<TabAnchor href="/encounters" name="Encounters">Encounters</TabAnchor>
+					<TabAnchor href="/settings" name="Settings">Settings</TabAnchor>
+					<!-- ... -->
+				</TabGroup>
+			</div>
+		</AppBar>
+	</svelte:fragment>
+	<!-- ... -->
+	<slot />
+</AppShell>
