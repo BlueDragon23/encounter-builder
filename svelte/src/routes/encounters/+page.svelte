@@ -1,7 +1,7 @@
 <script>
 	import EncounterCard from '$lib/EncounterCard.svelte';
 
-	// TODO: load data
+	export let data;
 </script>
 
 <div>
@@ -12,7 +12,9 @@
 
 	<div class="flex flex-col items-center">
 		<ul class="list md:container md:mx-auto">
-			<li><EncounterCard name="Test" description="This is an example encounter" id="1" /></li>
+			{#each data.encounters as encounter}
+				<li><EncounterCard {...encounter} /></li>
+			{/each}
 		</ul>
 	</div>
 </div>
