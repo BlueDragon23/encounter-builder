@@ -4,13 +4,14 @@
 	export let data;
 </script>
 
-<div>
-	<div class="p-4">
+<div class="p-4">
+	<div class="flex justify-between">
 		<h1 class="h1">Encounters</h1>
-		<p>This is a list of encounters</p>
+		<a href="/encounter" class="btn variant-filled-primary">Create Encounter</a>
 	</div>
+	<p>This is a list of encounters</p>
 
-	<div class="flex flex-col items-center">
+	<div class="flex flex-col items-center mt-4">
 		<ul class="list md:container md:mx-auto">
 			{#each data.encounters as encounter}
 				<li><EncounterCard {...encounter} /></li>
