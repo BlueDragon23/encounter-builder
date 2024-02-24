@@ -7,7 +7,7 @@
 <div class="p-4">
 	<div class="flex justify-between">
 		<h1 class="h1">Encounters</h1>
-		<a href="/encounter" class="btn variant-filled-primary">Create Encounter</a>
+		<a href="/create-encounter" class="btn variant-filled-primary">Create Encounter</a>
 	</div>
 	<p>This is a list of encounters</p>
 

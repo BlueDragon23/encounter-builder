@@ -1,3 +1,17 @@
+# Encounter Builder UI
+
+In terms of site layout, there are a few key functionalities provided.
+
+- Encounter list (`/encounters`)
+- Encounter view (`/encounters/[id]`)
+- Encounter edit (`/encounters/[id]/edit`)
+- Encounter create (`/create-encounter`)
+- Monster list (`/monsters`)
+- Monster view (`/monsters/[id]`)
+- Monster edit (`/monsters/[id]/edit`)
+- Monster create (`/create-monster`)
+- User settings (`/settings`)
+
 # create-svelte
 
 Everything you need to build a Svelte project, powered by [`create-svelte`](https://github.com/sveltejs/kit/tree/master/packages/create-svelte).
