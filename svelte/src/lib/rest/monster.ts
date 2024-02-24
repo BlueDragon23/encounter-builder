@@ -5,7 +5,7 @@ import type { Monster, MonsterDetails } from '$lib/types';
 export async function getMonster(id: string): Promise<MonsterDetails> {
 	const testData = useTestData();
 	if (testData) {
-		return { ...TestDataGenerator.getEncounter(), id };
+		return { ...TestDataGenerator.getMonster(), id };
 	} else {
 		// TODO: what is my server URL?
 		return fetch(`http://localhost:8080/monsters/${id}`)
