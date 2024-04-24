@@ -17,6 +17,8 @@ public record TemplateCreature(
         String type,
         String alignment,
         int armorClass,
+        float challengeRating,
+        int proficiencyBonus,
         int hitpoints,
         @Embedded.Empty(prefix = "dice_") Dice hitDice,
         @Embedded.Empty(prefix = "speed_") Speed speed,
@@ -53,6 +55,8 @@ public record TemplateCreature(
         private String type;
         private String alignment;
         private int armorClass;
+        private float challengeRating;
+        private int proficiencyBonus;
         private int hitpoints;
         private Dice hitDice;
         private Speed speed;
@@ -91,6 +95,16 @@ public record TemplateCreature(
 
         public Builder withArmorClass(int armorClass) {
             this.armorClass = armorClass;
+            return this;
+        }
+
+        public Builder withChallengeRating(float challengeRating) {
+            this.challengeRating = challengeRating;
+            return this;
+        }
+
+        public Builder withProficiencyBonus(int proficiencyBonus) {
+            this.proficiencyBonus = proficiencyBonus;
             return this;
         }
 
@@ -133,6 +147,8 @@ public record TemplateCreature(
                     type,
                     alignment,
                     armorClass,
+                    challengeRating,
+                    proficiencyBonus,
                     hitpoints,
                     hitDice,
                     speed,

@@ -1,9 +1,28 @@
 services:
   web:
-    build: .
+    image: aidang/encounter-builder:latest
     ports:
       - "8080:8080"
+    networks:
+      - network
     depends_on:
       - postgres
+    secrets:
+      - db_password
   postgres:
     image: postgres:latest
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: encounter-builder
+      POSTGRES_PASSWORD_FILE: /run/secrets/db_password
+    networks:
+      - network
+    secrets:
+      - db_password
+networks:
+  network:
+    name: network
+secrets:
+  db_password:
+    file: ./secrets/db_password.txt

@@ -1,4 +1,4 @@
-FROM eclipse-temurin:17-jdk
+FROM amazoncorretto:21-alpine3.19
 
 RUN addgroup --system appuser && adduser --system --ingroup appuser appuser
 USER appuser
@@ -8,4 +8,5 @@ COPY ${EXTRACTED}/dependencies/ ./
 COPY ${EXTRACTED}/spring-boot-loader/ ./
 COPY ${EXTRACTED}/snapshot-dependencies/ ./
 COPY ${EXTRACTED}/application/ ./
-ENTRYPOINT ["java","org.springframework.boot.loader.JarLauncher"]
+COPY ./bin/entrypoint.sh ./
+ENTRYPOINT ["/bin/sh", "./entrypoint.sh"]

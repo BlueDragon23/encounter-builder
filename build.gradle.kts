@@ -2,7 +2,7 @@ plugins {
     java
     id("org.springframework.boot") version "3.1.1"
     id("io.spring.dependency-management") version "1.1.0"
-    id("com.diffplug.spotless") version "6.19.0"
+    id("com.diffplug.spotless") version "6.25.0"
     id("com.github.node-gradle.node") version "7.0.1"
 }
 
@@ -39,6 +39,13 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-web")
+
+    // junit
+    testImplementation(platform("org.junit:junit-bom:5.10.2"))
+    testImplementation("org.junit.jupiter:junit-jupiter")
+
+    testImplementation("org.assertj:assertj-core:3.25.1")
+
     testImplementation("org.springframework.boot:spring-boot-devtools")
     runtimeOnly("org.postgresql:postgresql")
     testImplementation("org.springframework.boot:spring-boot-starter-test")
@@ -49,10 +56,17 @@ dependencies {
 
 tasks.withType<Test> {
     useJUnitPlatform()
+    testLogging {
+        events("passed", "skipped", "failed")
+    }
+}
+
+tasks.jar {
+    // Only use the spring jar
+    enabled = false
 }
 
 tasks.processResources {
-    dependsOn("npm_run_build")
     from("svelte/build") {
         into("static")
     }
