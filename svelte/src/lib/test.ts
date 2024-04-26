@@ -11,7 +11,7 @@ function getEncounter(): Encounter {
 	crypto.getRandomValues(arr);
 
 	return {
-		id: LOREM_IPSUM[arr[0]],
+		id: LOREM_IPSUM[arr[0]].replace('.,', ''),
 		name: LOREM_IPSUM[arr[1]] + ' ' + LOREM_IPSUM[arr[2]],
 		description: [...arr.slice(3)].map((x) => LOREM_IPSUM[x]).join(' '),
 		enemies: []

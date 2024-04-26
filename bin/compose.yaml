@@ -4,11 +4,19 @@ services:
     ports:
       - "8080:8080"
     networks:
-      - network
+      - backend
+      - frontend
     depends_on:
       - postgres
     secrets:
       - db_password
+  frontend:
+    # TODO: make the frontend talk to the backend in the right way
+    image: aidang/encounter-builder-ui:latest
+    ports:
+      - "3000:3000"
+    networks:
+      - frontend
   postgres:
     image: postgres:latest
     ports:
@@ -17,12 +25,14 @@ services:
       POSTGRES_USER: encounter-builder
       POSTGRES_PASSWORD_FILE: /run/secrets/db_password
     networks:
-      - network
+      - backend
     secrets:
       - db_password
 networks:
-  network:
-    name: network
+  backend:
+    name: backend
+  frontend:
+    name: frontend
 secrets:
   db_password:
     file: ./secrets/db_password.txt

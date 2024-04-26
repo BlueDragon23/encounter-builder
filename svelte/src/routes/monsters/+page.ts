@@ -4,10 +4,12 @@ import { TestDataGenerator } from '$lib/test';
 export function load({}): { monsters: Monster[] } {
 	return {
 		monsters: [
-			TestDataGenerator.getEncounter(),
-			TestDataGenerator.getEncounter(),
-			TestDataGenerator.getEncounter(),
-			TestDataGenerator.getEncounter()
+			TestDataGenerator.getMonster(),
+			TestDataGenerator.getMonster(),
+			TestDataGenerator.getMonster(),
+			TestDataGenerator.getMonster()
 		]
 	};
 }
+
+export const prerender = false;

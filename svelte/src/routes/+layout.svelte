@@ -1,6 +1,7 @@
 <script>
+	import { toggleTestData, useTestData } from '$lib';
 	import '../app.postcss';
-	import { AppShell, AppBar, TabGroup, TabAnchor } from '@skeletonlabs/skeleton';
+	import { AppShell, AppBar, TabGroup, TabAnchor, SlideToggle } from '@skeletonlabs/skeleton';
 </script>
 
 <AppShell>
@@ -14,6 +15,11 @@
 					<TabAnchor href="/settings" name="Settings">Settings</TabAnchor>
 					<!-- ... -->
 				</TabGroup>
+			</div>
+			<div>
+				<SlideToggle name="testMode" checked={useTestData()} on:change={toggleTestData}
+					>Test Mode</SlideToggle
+				>
 			</div>
 		</AppBar>
 	</svelte:fragment>
