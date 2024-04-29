@@ -1,0 +1,28 @@
+FROM node:18-alpine
+
+WORKDIR /application
+COPY dev-entrypoint.sh .
+# Copy package json/package lock
+COPY package.json .
+COPY package-lock.json .
+# Install dependencies
+RUN npm ci
+COPY ./static ./static/
+# Copy all of the config files required
+COPY [\
+    ".eslintignore",\
+    ".eslintrc.cjs",\
+    ".npmrc",\
+    ".prettierignore",\
+    ".prettierrc",\
+    "postcss.config.cjs",\
+    "svelte.config.js",\
+    "tailwind.config.ts",\
+    "tsconfig.json",\
+    "vite.config.ts",\
+    "./"\
+]
+# Set src via volume
+VOLUME ./src
+# Need to build before preview. Task dependencies who?
+ENTRYPOINT ["/bin/sh", "./dev-entrypoint.sh"]

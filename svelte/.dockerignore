@@ -2,3 +2,18 @@
 !package.json
 !package-lock.json
 !build
+# Dev Dockerfile
+!dev-entrypoint.sh
+
+!src
+!static
+!.eslintignore
+!.eslintrc.cjs
+!.npmrc
+!.prettierignore
+!.prettierrc
+!postcss.config.cjs
+!svelte.config.js
+!tailwind.config.ts
+!tsconfig.json
+!vite.config.ts

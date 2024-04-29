@@ -10,7 +10,6 @@ java -Djarmode=layertools -jar build/libs/*.jar extract --destination build/extr
 docker build -t aidang/encounter-builder -f bin/Dockerfile .
 
 pushd svelte
-docker build -t aidang/encounter-builder-ui-dev -f Dockerfile-dev .
+npm run build
+docker build -t aidang/encounter-builder-ui .
 popd
-
-docker compose -f ./bin/compose-dev.yaml up -d

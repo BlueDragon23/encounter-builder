@@ -11,9 +11,13 @@ services:
     secrets:
       - db_password
   frontend:
-    image: aidang/encounter-builder-ui:latest
+    image: aidang/encounter-builder-ui-dev:latest
+    volumes:
+      - type: bind
+        source: ../svelte/src
+        target: /application/src
     ports:
-      - "3000:3000"
+      - "4173:4173"
     networks:
       - frontend
   postgres:
