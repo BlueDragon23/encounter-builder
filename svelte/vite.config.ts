@@ -4,7 +4,10 @@ import { purgeCss } from 'vite-plugin-tailwind-purgecss';
 
 export default defineConfig({
 	plugins: [sveltekit(), purgeCss()],
+	server: {
+		host: true
+	},
 	preview: {
-        host: true
-    }
+		host: true
+	}
 });

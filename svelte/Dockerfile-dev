@@ -24,5 +24,5 @@ COPY [\
 ]
 # Set src via volume
 VOLUME ./src
-# Need to build before preview. Task dependencies who?
+# Need to build before dev. Task dependencies who?
 ENTRYPOINT ["/bin/sh", "./dev-entrypoint.sh"]

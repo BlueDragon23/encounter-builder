@@ -1,4 +1,4 @@
 #!/usr/bin/env sh
 
 npm run build
-npm run preview
+npm run dev
