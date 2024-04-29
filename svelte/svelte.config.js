@@ -26,7 +26,12 @@ const config = {
 			fallback: undefined,
 			precompress: false,
 			strict: true
-		})
+		}),
+		files: {
+			hooks: {
+				universal: 'src/hooks.ts'
+			}
+		}
 	}
 };
 

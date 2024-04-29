@@ -1,7 +1,8 @@
-<script>
-	import MonsterCard from '$lib/MonsterCard.svelte';
+<script lang="ts">
+	import MonsterCard from '$lib/monsters/MonsterCard.svelte';
+	import type { MonstersPageData } from './+page';
 
-	export let data;
+	export let data: MonstersPageData;
 </script>
 
 <div class="p-4">
@@ -13,9 +14,11 @@
 
 	<div class="flex flex-col items-center mt-4">
 		<ul class="list md:container md:mx-auto">
-			{#each data.monsters as monster}
-				<li><MonsterCard {...monster} /></li>
-			{/each}
+			{#await data.monsters then monsters}
+				{#each monsters as monster}
+					<li><MonsterCard {...monster} /></li>
+				{/each}
+			{/await}
 		</ul>
 	</div>
 </div>

@@ -12,11 +12,17 @@ export interface Monster {
 }
 
 export type MonsterDetails = Monster & {
-	size: string;
+	creatureSize: string;
 	alignment: string;
-	ac: string;
-	hp: string;
-	speed: string;
+	armorClass: string;
+	hitpoints: string;
+	speed: {
+		walk: number;
+		burrow: number;
+		climb: number;
+		fly: number;
+		swim: number;
+	};
 	initiative: number;
 	abilityScores: {
 		strength: number;

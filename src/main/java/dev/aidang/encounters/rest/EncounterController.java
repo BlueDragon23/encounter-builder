@@ -10,6 +10,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
+@CrossOrigin("localhost:5173")
 public class EncounterController {
 
     private final EncounterRepository encounterRepository;

@@ -11,6 +11,9 @@ import org.springframework.context.annotation.Profile;
 @Profile("production")
 public class DatabaseConfig {
 
+    /**
+     * Configure datasource by injecting properties into the data source builder
+     */
     @Bean
     @ConfigurationProperties("app.datasource")
     public DataSource postgres() {

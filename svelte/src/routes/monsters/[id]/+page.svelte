@@ -1,10 +1,12 @@
-<script>
-	import MonsterDetails from '$lib/MonsterDetails.svelte';
+<script lang="ts">
+	import MonsterDetailsCard from '$lib/monsters/MonsterDetailsCard.svelte';
+	import type { MonsterDetails } from '$lib/types';
 
-	export let data;
+	export let data: Promise<MonsterDetails>;
 </script>
 
 <div class="p-4">
-	<h1 class="h1">{data.name}</h1>
-	<MonsterDetails {...data} details={data} />
+	{#await data then loaded}
+		<MonsterDetailsCard {...loaded} details={loaded} />
+	{/await}
 </div>

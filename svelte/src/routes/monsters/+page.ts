@@ -1,14 +1,13 @@
 import type { Monster } from '$lib/types';
-import { TestDataGenerator } from '$lib/test';
+import { getMonsters } from '$lib/rest/monster';
 
-export function load({}): { monsters: Monster[] } {
+export interface MonstersPageData {
+	monsters: Promise<Monster[]>;
+}
+
+export function load({}): MonstersPageData {
 	return {
-		monsters: [
-			TestDataGenerator.getMonster(),
-			TestDataGenerator.getMonster(),
-			TestDataGenerator.getMonster(),
-			TestDataGenerator.getMonster()
-		]
+		monsters: getMonsters()
 	};
 }
 

@@ -7,7 +7,9 @@
 <div class="card card-hover p-4 md:container md:mx-auto text-token">
 	<div class="content text-token px-4">
 		<h3 class="h3">{name}</h3>
-		<div>{description}</div>
+		{#if description != null}
+			<div>{description}</div>
+		{/if}
 	</div>
 	<div class="card-footer flex justify-end">
 		<div class="btn-group gap-4 text-token">
