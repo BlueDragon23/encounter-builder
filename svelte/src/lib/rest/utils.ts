@@ -7,6 +7,12 @@ export function withHost(path: string, ssr: boolean): string {
 	}
 }
 
+export interface PageableRequest {
+	pageNumber: number;
+	pageSize: number;
+	offset: number;
+}
+
 export interface PageableResponse<T> {
 	content: T[];
 	pageable: {

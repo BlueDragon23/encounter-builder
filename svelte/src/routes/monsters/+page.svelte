@@ -1,6 +1,7 @@
 <script lang="ts">
 	import MonsterCard from '$lib/monsters/MonsterCard.svelte';
 	import type { MonstersPageData } from './+page';
+	import SpringPaginator from '$lib/SpringPaginator.svelte';
 
 	export let data: MonstersPageData;
 </script>
@@ -15,10 +16,13 @@
 	<div class="flex flex-col items-center mt-4">
 		<ul class="list md:container md:mx-auto">
 			{#await data.monsters then monsters}
-				{#each monsters as monster}
+				{#each monsters.content as monster}
 					<li><MonsterCard {...monster} /></li>
 				{/each}
 			{/await}
 		</ul>
 	</div>
+	{#await data.monsters then pagination}
+		<SpringPaginator pageable={pagination} />
+	{/await}
 </div>
