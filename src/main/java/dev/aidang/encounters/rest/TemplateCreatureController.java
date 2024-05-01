@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -18,8 +19,8 @@ public class TemplateCreatureController {
     }
 
     @GetMapping("/monsters")
-    public Page<TemplateCreature> getMonsters(Pageable pageable) {
-        return templateCreatureService.getMonsters(pageable);
+    public Page<TemplateCreature> getMonsters(Pageable pageable, @RequestParam("name") String name) {
+        return templateCreatureService.searchMonsters(pageable, name);
     }
 
     @GetMapping("/monsters/{id}")

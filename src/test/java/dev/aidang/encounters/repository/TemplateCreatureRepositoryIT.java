@@ -13,6 +13,8 @@ import org.jetbrains.annotations.NotNull;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 @IntegrationTest
 public class TemplateCreatureRepositoryIT {
@@ -41,7 +43,7 @@ public class TemplateCreatureRepositoryIT {
     }
 
     @Test
-    void testFind() {
+    void testFindById() {
         // when
         TemplateCreature expected = getTemplateCreature().build();
         TemplateCreature saved = sut.save(expected);
@@ -51,6 +53,21 @@ public class TemplateCreatureRepositoryIT {
 
         // verify
         assertThat(result).hasValue(saved);
+    }
+
+    @Test
+    void testSearchByName() {
+        // when
+        TemplateCreature expected = getTemplateCreature().build();
+        TemplateCreature other = getTemplateCreature("Other Creature").build();
+        TemplateCreature saved = sut.save(expected);
+        sut.save(other);
+
+        // then
+        Page<TemplateCreature> result = sut.findByName(Pageable.unpaged(), expected.name());
+
+        // verify
+        assertThat(result.get()).singleElement().isEqualTo(saved);
     }
 
     @NotNull

@@ -45,8 +45,11 @@ public class TemplateCreatureService {
         }
     }
 
-    public Page<TemplateCreature> getMonsters(Pageable pageable) {
-        return templateCreatureRepository.findAll(pageable);
+    public Page<TemplateCreature> searchMonsters(Pageable pageable, String name) {
+        if (name == null) {
+            return templateCreatureRepository.findAll(pageable);
+        }
+        return templateCreatureRepository.findByName(pageable, name);
     }
 
     public TemplateCreature getMonster(Long id) {
