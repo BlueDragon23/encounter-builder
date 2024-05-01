@@ -4,13 +4,14 @@ plugins {
     id("io.spring.dependency-management") version "1.1.0"
     id("com.diffplug.spotless") version "6.25.0"
     id("com.github.node-gradle.node") version "7.0.1"
+    id("org.springdoc.openapi-gradle-plugin") version "1.8.0"
 }
 
 group = "dev.aidang"
 version = "0.0.1-SNAPSHOT"
 
 java {
-    sourceCompatibility = JavaVersion.VERSION_17
+    sourceCompatibility = JavaVersion.VERSION_21
 }
 
 tasks.jar {
@@ -39,6 +40,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-web")
+    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
 
     // junit
     testImplementation(platform("org.junit:junit-bom:5.10.2"))
