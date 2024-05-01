@@ -5,7 +5,12 @@ import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.MappedCollection;
 
 public record Attack(
-        @Id Long id, String name, String description, @MappedCollection List<Damage> damage, String range) {
+        @Id Long id,
+        String name,
+        String description,
+        @MappedCollection List<Damage> damage,
+        String range,
+        AttackType attackType) {
 
     public static Builder builder() {
         return new Builder();
@@ -25,6 +30,7 @@ public record Attack(
         private String description;
         private List<Damage> damage;
         private String range;
+        private AttackType attackType;
 
         public Builder withId(Long id) {
             this.id = id;
@@ -51,8 +57,13 @@ public record Attack(
             return this;
         }
 
+        public Builder withAttackType(AttackType attackType) {
+            this.attackType = attackType;
+            return this;
+        }
+
         public Attack build() {
-            return new Attack(id, name, description, damage, range);
+            return new Attack(id, name, description, damage, range, attackType);
         }
     }
 }

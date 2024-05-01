@@ -1,13 +1,13 @@
 <script lang="ts">
-	export let id: string;
+	export let id: number;
 	export let name: string;
-	export let description: string;
+	export let description: string | undefined;
 </script>
 
 <div class="card card-hover p-4 md:container md:mx-auto text-token">
 	<div class="content text-token px-4">
 		<h3 class="h3">{name}</h3>
-		{#if description != null}
+		{#if description}
 			<div>{description}</div>
 		{/if}
 	</div>

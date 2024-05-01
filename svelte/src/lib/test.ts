@@ -1,3 +1,4 @@
+import type { components } from './generated/client';
 import type { Encounter, Monster, MonsterDetails } from './types';
 
 const LOREM_IPSUM = `
@@ -18,20 +19,21 @@ function getEncounter(): Encounter {
 	};
 }
 
-function getMonster(): MonsterDetails {
+function getMonster(): components['schemas']['TemplateCreature'] {
 	let arr = new Uint8Array(8);
 	crypto.getRandomValues(arr);
 
 	return {
-		id: LOREM_IPSUM[arr[0]],
+		id: 0,
 		name: LOREM_IPSUM[arr[1]] + ' ' + LOREM_IPSUM[arr[2]],
 		description: [...arr.slice(3)].map((x) => LOREM_IPSUM[x]).join(' '),
-		size: 'medium',
+		creatureSize: 'MEDIUM',
 		alignment: 'Neutral',
-		ac: '10 (natural armor)',
-		hp: '5 (1d8 + 0)',
-		speed: '30ft',
-		initiative: 0,
+		armorClass: 10,
+		hitpoints: 5,
+		speed: {
+			walk: 30
+		},
 		abilityScores: {
 			strength: 10,
 			dexterity: 10,
@@ -41,9 +43,6 @@ function getMonster(): MonsterDetails {
 			charisma: 10
 		},
 		savingThrows: [],
-		skills: [],
-		senses: '',
-		languages: 'common',
 		challengeRating: 0,
 		proficiencyBonus: 0
 	};
@@ -51,7 +50,7 @@ function getMonster(): MonsterDetails {
 
 export interface GenerateTestData {
 	getEncounter(): Encounter;
-	getMonster(): MonsterDetails;
+	getMonster(): components['schemas']['TemplateCreature'];
 }
 
 export const TestDataGenerator: GenerateTestData = {

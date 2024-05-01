@@ -1,12 +1,14 @@
 package dev.aidang.encounters.model.creatures;
 
-import static dev.aidang.encounters.model.creatures.Speed.*;
+import static dev.aidang.encounters.model.creatures.Speed.parseSpeed;
 
 import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import dev.aidang.encounters.model.Dice;
 import java.util.List;
 import java.util.Optional;
+import java.util.function.Function;
+import java.util.stream.Stream;
 
 /**
  * Creature model based on the D&D 5e API project
@@ -59,8 +61,11 @@ public record FifthEditionDatabaseCreature(
                 .withArmorClass(armorClass.get(0).value)
                 .withHitpoints(hitPoints)
                 .withHitDice(Dice.parse(hitDice))
-                .withAttacks(
-                        actions != null ? actions.stream().map(Action::toAttack).toList() : List.of())
+                .withAttacks(Stream.concat(
+                                safeTransform(actions, Action::toAttack).stream(),
+                                safeTransform(legendaryActions, Action::toLegendaryAttack).stream())
+                        .toList())
+                .withSpecialAbilities(safeTransform(specialAbilities, SpecialAbility::toSpecialAbility))
                 .withChallengeRating(challengeRating)
                 .withProficiencyBonus(proficiencyBonus)
                 .withSavingThrows(
@@ -73,19 +78,43 @@ public record FifthEditionDatabaseCreature(
                 .build();
     }
 
+    private static <T, U> List<U> safeTransform(List<T> items, Function<T, U> transform) {
+        if (items == null || items.isEmpty()) {
+            return List.of();
+        } else {
+            return items.stream().map(transform).toList();
+        }
+    }
+
     public record RefModel(String index, String name) {}
 
     // TODO: so many fields
     @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
     public record Action(String name, String desc, int attackBonus) {
         public Attack toAttack() {
-            return Attack.builder().withName(name).withDescription(desc).build();
+            return Attack.builder()
+                    .withName(name)
+                    .withDescription(desc)
+                    .withAttackType(AttackType.ACTION)
+                    .build();
+        }
+
+        public Attack toLegendaryAttack() {
+            return Attack.builder()
+                    .withName(name)
+                    .withDescription(desc)
+                    .withAttackType(AttackType.LEGENDARY)
+                    .build();
         }
     }
 
     // TODO: so many fields
     @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-    public record SpecialAbility(String name, String desc, int attackBonus) {}
+    public record SpecialAbility(String name, String desc, int attackBonus) {
+        public dev.aidang.encounters.model.creatures.SpecialAbility toSpecialAbility() {
+            return new dev.aidang.encounters.model.creatures.SpecialAbility(name, desc, attackBonus);
+        }
+    }
 
     public record ArmorClass(String type, int value, RefModel condition) {}
 

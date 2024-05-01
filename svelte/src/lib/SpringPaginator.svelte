@@ -5,9 +5,9 @@
 
 	function getPaginationSettings(pagination: PageableResponse<any>): PaginationSettings {
 		return {
-			page: pagination.number,
-			limit: pagination.size,
-			size: pagination.totalElements,
+			page: pagination.number ?? 1,
+			limit: pagination.size ?? 20,
+			size: pagination.totalElements ?? 1,
 			amounts: [5, 10, 20, 50]
 		} satisfies PaginationSettings;
 	}
@@ -15,9 +15,11 @@
 	export let pageable: PageableResponse<any>;
 </script>
 
-<Paginator
-	settings={getPaginationSettings(pageable)}
-	on:page={(number) => goto(`?page=${number.detail}&limit=${pageable.pageable.pageSize}`)}
-	on:amount={(amount) => goto(`?page=${pageable.pageable.pageNumber}&limit=${amount.detail}`)}
-	showNumerals
-/>
+<div class="my-4">
+	<Paginator
+		settings={getPaginationSettings(pageable)}
+		on:page={(number) => goto(`?page=${number.detail}&size=${pageable.pageable?.pageSize}`)}
+		on:amount={(amount) => goto(`?page=${pageable.pageable?.pageNumber}&size=${amount.detail}`)}
+		showNumerals
+	/>
+</div>

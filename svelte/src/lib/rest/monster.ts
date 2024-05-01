@@ -1,22 +1,37 @@
 import { useTestData } from '$lib';
+import type { components } from '$lib/generated/client';
 import { TestDataGenerator } from '$lib/test';
-import type { MonsterDetails } from '$lib/types';
-import { withHost, type PageableRequest, type PageableResponse } from './utils';
+import { client, pageableQuerySerialiser } from './utils';
 
-export async function getMonster(id: string): Promise<MonsterDetails> {
+type SvelteFetch = (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+
+export async function getMonster(
+	id: number,
+	fetch: SvelteFetch
+): Promise<components['schemas']['TemplateCreature'] | undefined> {
 	const testData = useTestData();
 	if (testData) {
 		return { ...TestDataGenerator.getMonster(), id };
 	} else {
-		return fetch(withHost(`/monsters/${id}`, true))
-			.then((res) => res.json())
-			.catch((err) => console.error(err));
+		const { data, error } = await client.GET('/monsters/{id}', {
+			fetch,
+			params: {
+				path: {
+					id
+				}
+			}
+		});
+		if (error) {
+			console.error(error);
+		}
+		return data;
 	}
 }
 
 export async function getMonsters(
-	request: PageableRequest
-): Promise<PageableResponse<MonsterDetails>> {
+	pageable: components['schemas']['Pageable'],
+	fetch: SvelteFetch
+): Promise<components['schemas']['PageTemplateCreature'] | undefined> {
 	const testData = useTestData();
 	if (testData) {
 		return {
@@ -37,22 +52,22 @@ export async function getMonsters(
 			numberOfElements: 4,
 			size: 4,
 			number: 4,
-			sort: {
-				unsorted: true,
-				sorted: false,
-				empty: false
-			},
 			first: true,
 			empty: false
 		};
 	} else {
-		return fetch(
-			withHost(
-				`/monsters?size=${request.pageSize}&page=${request.pageNumber}&offset=${request.offset}`,
-				false
-			)
-		)
-			.then((res) => res.json())
-			.catch((err) => console.error(err)) as Promise<PageableResponse<MonsterDetails>>;
+		const { data, error } = await client.GET('/monsters', {
+			fetch,
+			params: {
+				query: {
+					pageable
+				}
+			},
+			querySerializer: pageableQuerySerialiser
+		});
+		if (error) {
+			console.error(error);
+		}
+		return data;
 	}
 }

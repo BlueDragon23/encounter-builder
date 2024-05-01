@@ -11,18 +11,27 @@
 		<h1 class="h1">Monsters</h1>
 		<a href="/create-monster" class="btn variant-filled-primary">Create Monster</a>
 	</div>
-	<p>This is a list of monsters</p>
 
 	<div class="flex flex-col items-center mt-4">
 		<ul class="list md:container md:mx-auto">
 			{#await data.monsters then monsters}
-				{#each monsters.content as monster}
-					<li><MonsterCard {...monster} /></li>
-				{/each}
+				{#if monsters && monsters.content}
+					{#each monsters.content as monster}
+						<li>
+							<MonsterCard
+								id={monster.id ?? 0}
+								name={monster.name ?? ''}
+								description={monster.description}
+							/>
+						</li>
+					{/each}
+				{/if}
 			{/await}
 		</ul>
 	</div>
 	{#await data.monsters then pagination}
-		<SpringPaginator pageable={pagination} />
+		{#if pagination}
+			<SpringPaginator pageable={pagination} />
+		{/if}
 	{/await}
 </div>

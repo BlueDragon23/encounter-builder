@@ -1,16 +1,15 @@
-import type { MonsterDetails } from '$lib/types';
 import { getMonsters } from '$lib/rest/monster';
-import type { PageableResponse } from '$lib/rest/utils.js';
+import type { components } from '$lib/generated/client';
 
 export interface MonstersPageData {
-	monsters: Promise<PageableResponse<MonsterDetails>>;
+	monsters: Promise<components['schemas']['PageTemplateCreature'] | undefined>;
 }
 
-export function load({ url }): MonstersPageData {
-	let page = url.searchParams.get('page') || 1;
-	let limit = url.searchParams.get('limit') || 20;
+export function load({ url, fetch }): MonstersPageData {
+	let page = url.searchParams.get('page') || 0;
+	let size = url.searchParams.get('size') || 20;
 	return {
-		monsters: getMonsters({ pageSize: limit as number, pageNumber: page as number, offset: 0 })
+		monsters: getMonsters({ size: size as number, page: page as number }, fetch)
 	};
 }
 

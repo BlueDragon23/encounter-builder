@@ -69,6 +69,8 @@ export interface components {
       description?: string;
       damage?: components["schemas"]["Damage"][];
       range?: string;
+      /** @enum {string} */
+      attackType?: "ACTION" | "REACTION" | "LEGENDARY";
     };
     Damage: {
       /** Format: int64 */
@@ -122,6 +124,12 @@ export interface components {
       property?: string;
       ignoreCase?: boolean;
     };
+    SpecialAbility: {
+      name?: string;
+      description?: string;
+      /** Format: int32 */
+      attackBonus?: number;
+    };
     Speed: {
       /** Format: int32 */
       walk?: number;
@@ -155,6 +163,7 @@ export interface components {
       speed?: components["schemas"]["Speed"];
       abilityScores?: components["schemas"]["AbilityScores"];
       attacks?: components["schemas"]["Attack"][];
+      specialAbilities?: components["schemas"]["SpecialAbility"][];
       savingThrows?: ("STRENGTH" | "DEXTERITY" | "CONSTITUTION" | "INTELLIGENCE" | "WISDOM" | "CHARISMA")[];
     };
   };

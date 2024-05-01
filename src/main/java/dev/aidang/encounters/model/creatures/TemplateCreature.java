@@ -25,6 +25,7 @@ public record TemplateCreature(
         @Embedded.Empty(prefix = "ability_") AbilityScores abilityScores,
         // TODO: child tables?
         @MappedCollection List<Attack> attacks,
+        @MappedCollection List<SpecialAbility> specialAbilities,
         List<Abilities> savingThrows) {
 
     public static Builder builder(String name) {
@@ -42,6 +43,7 @@ public record TemplateCreature(
                 .withHitDice(hitDice)
                 .withSpeed(speed)
                 .withAttacks(attacks)
+                .withSpecialAbilities(specialAbilities)
                 .withAbilityScores(abilityScores)
                 .withSavingThrows(savingThrows);
     }
@@ -61,8 +63,9 @@ public record TemplateCreature(
         private Dice hitDice;
         private Speed speed;
         private AbilityScores abilityScores;
-        private List<Attack> attacks;
-        private List<Abilities> savingThrows;
+        private List<Attack> attacks = List.of();
+        private List<SpecialAbility> specialAbilities = List.of();
+        private List<Abilities> savingThrows = List.of();
 
         private Builder(String name) {
             this.name = name;
@@ -133,6 +136,11 @@ public record TemplateCreature(
             return this;
         }
 
+        public Builder withSpecialAbilities(List<SpecialAbility> specialAbilities) {
+            this.specialAbilities = specialAbilities;
+            return this;
+        }
+
         public Builder withSavingThrows(List<Abilities> abilities) {
             this.savingThrows = abilities;
             return this;
@@ -154,6 +162,7 @@ public record TemplateCreature(
                     speed,
                     abilityScores,
                     attacks,
+                    specialAbilities,
                     savingThrows);
         }
     }

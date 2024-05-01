@@ -12,7 +12,7 @@ import java.util.Objects;
 public class TestUtils {
 
     public static TemplateCreature.Builder getTemplateCreature() {
-        return TemplateCreature.builder("Adult Black Dragon")
+        return TemplateCreature.builder("Big Black Dragon")
                 .withCreatureSize(CreatureSize.HUGE)
                 .withArmorClass(19)
                 .withHitpoints(195)
