@@ -48,6 +48,60 @@ export interface components {
       size?: number;
       sort?: string[];
     };
+    PageTemplateCreatureSummary: {
+      /** Format: int32 */
+      totalPages?: number;
+      /** Format: int64 */
+      totalElements?: number;
+      pageable?: components["schemas"]["PageableObject"];
+      /** Format: int32 */
+      numberOfElements?: number;
+      /** Format: int32 */
+      size?: number;
+      content?: components["schemas"]["TemplateCreatureSummary"][];
+      /** Format: int32 */
+      number?: number;
+      sort?: components["schemas"]["SortObject"][];
+      first?: boolean;
+      last?: boolean;
+      empty?: boolean;
+    };
+    PageableObject: {
+      paged?: boolean;
+      unpaged?: boolean;
+      /** Format: int32 */
+      pageNumber?: number;
+      /** Format: int32 */
+      pageSize?: number;
+      /** Format: int64 */
+      offset?: number;
+      sort?: components["schemas"]["SortObject"][];
+    };
+    SortObject: {
+      direction?: string;
+      nullHandling?: string;
+      ascending?: boolean;
+      property?: string;
+      ignoreCase?: boolean;
+    };
+    TemplateCreatureSummary: {
+      /** Format: int64 */
+      id?: number;
+      name?: string;
+      description?: string;
+      /** @enum {string} */
+      creatureSize?: "TINY" | "SMALL" | "MEDIUM" | "LARGE" | "HUGE" | "GARGANTUAN";
+      type?: string;
+      alignment?: string;
+      /** Format: int32 */
+      armorClass?: number;
+      /** Format: float */
+      challengeRating?: number;
+      /** Format: int32 */
+      proficiencyBonus?: number;
+      /** Format: int32 */
+      hitpoints?: number;
+    };
     AbilityScores: {
       /** Format: int32 */
       strength?: number;
@@ -87,42 +141,6 @@ export interface components {
       die?: "D3" | "D4" | "D6" | "D8" | "D10" | "D12" | "D20" | "D100";
       /** Format: int32 */
       count?: number;
-    };
-    PageTemplateCreature: {
-      /** Format: int32 */
-      totalPages?: number;
-      /** Format: int64 */
-      totalElements?: number;
-      pageable?: components["schemas"]["PageableObject"];
-      /** Format: int32 */
-      numberOfElements?: number;
-      /** Format: int32 */
-      size?: number;
-      content?: components["schemas"]["TemplateCreature"][];
-      /** Format: int32 */
-      number?: number;
-      sort?: components["schemas"]["SortObject"][];
-      first?: boolean;
-      last?: boolean;
-      empty?: boolean;
-    };
-    PageableObject: {
-      paged?: boolean;
-      unpaged?: boolean;
-      /** Format: int32 */
-      pageNumber?: number;
-      /** Format: int32 */
-      pageSize?: number;
-      /** Format: int64 */
-      offset?: number;
-      sort?: components["schemas"]["SortObject"][];
-    };
-    SortObject: {
-      direction?: string;
-      nullHandling?: string;
-      ascending?: boolean;
-      property?: string;
-      ignoreCase?: boolean;
     };
     SpecialAbility: {
       name?: string;
@@ -205,13 +223,14 @@ export interface operations {
     parameters: {
       query: {
         pageable: components["schemas"]["Pageable"];
+        name?: string;
       };
     };
     responses: {
       /** @description OK */
       200: {
         content: {
-          "*/*": components["schemas"]["PageTemplateCreature"];
+          "*/*": components["schemas"]["PageTemplateCreatureSummary"];
         };
       };
       /** @description Not Found */

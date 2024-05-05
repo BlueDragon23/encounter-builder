@@ -7,6 +7,9 @@ import static org.assertj.core.api.Assertions.assertThat;
 import dev.aidang.encounters.IntegrationTest;
 import dev.aidang.encounters.TestEncountersApplication;
 import dev.aidang.encounters.model.creatures.TemplateCreature;
+import dev.aidang.encounters.model.creatures.TemplateCreatureSummary;
+import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.stream.IntStream;
 import org.jetbrains.annotations.NotNull;
@@ -64,10 +67,58 @@ public class TemplateCreatureRepositoryIT {
         sut.save(other);
 
         // then
-        Page<TemplateCreature> result = sut.findByName(Pageable.unpaged(), expected.name());
+        Page<TemplateCreature> result = sut.findByNameContaining(expected.name(), Pageable.unpaged());
 
         // verify
         assertThat(result.get()).singleElement().isEqualTo(saved);
+    }
+
+    @Test
+    void testSearchByNameSubstring() {
+        // when
+        TemplateCreature expected = getTemplateCreature().build();
+        TemplateCreature other = getTemplateCreature("Other Creature").build();
+        TemplateCreature saved = sut.save(expected);
+        sut.save(other);
+
+        // then
+        List<TemplateCreatureSummary> result =
+                sut.findSummaryByNameContaining(expected.name().substring(2, 8), 10, 0);
+
+        // verify
+        assertThat(result).singleElement().isEqualTo(saved.toSummary());
+    }
+
+    @Test
+    void testSearchByNameSubstringCaseInsensitive() {
+        // when
+        TemplateCreature expected = getTemplateCreature().build();
+        TemplateCreature other = getTemplateCreature("Other Creature").build();
+        TemplateCreature saved = sut.save(expected);
+        sut.save(other);
+
+        // then
+        List<TemplateCreatureSummary> result =
+                sut.findSummaryByNameContaining(expected.name().substring(2, 8).toLowerCase(Locale.ENGLISH), 10, 0);
+
+        // verify
+        assertThat(result).singleElement().isEqualTo(saved.toSummary());
+    }
+
+    @Test
+    void testCountByNameSubstringCaseInsensitive() {
+        // when
+        TemplateCreature expected = getTemplateCreature().build();
+        TemplateCreature other = getTemplateCreature("Other Creature").build();
+        TemplateCreature saved = sut.save(expected);
+        sut.save(other);
+
+        // then
+        int result =
+                sut.countSummaryByNameContaining(expected.name().substring(2, 8).toLowerCase(Locale.ENGLISH));
+
+        // verify
+        assertThat(result).isEqualTo(1);
     }
 
     @NotNull

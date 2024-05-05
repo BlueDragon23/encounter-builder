@@ -1,5 +1,5 @@
 import { useTestData } from '$lib';
-import type { components } from '$lib/generated/client';
+import type { components, operations } from '$lib/generated/client';
 import { TestDataGenerator } from '$lib/test';
 import { client, pageableQuerySerialiser } from './utils';
 
@@ -30,8 +30,9 @@ export async function getMonster(
 
 export async function getMonsters(
 	pageable: components['schemas']['Pageable'],
-	fetch: SvelteFetch
-): Promise<components['schemas']['PageTemplateCreature'] | undefined> {
+	fetch: SvelteFetch,
+	query: Omit<operations['getMonsters']['parameters']['query'], 'pageable'>
+): Promise<components['schemas']['PageTemplateCreatureSummary'] | undefined> {
 	const testData = useTestData();
 	if (testData) {
 		return {
@@ -60,7 +61,8 @@ export async function getMonsters(
 			fetch,
 			params: {
 				query: {
-					pageable
+					pageable,
+					...query
 				}
 			},
 			querySerializer: pageableQuerySerialiser

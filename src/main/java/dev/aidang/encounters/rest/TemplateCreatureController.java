@@ -1,6 +1,7 @@
 package dev.aidang.encounters.rest;
 
 import dev.aidang.encounters.model.creatures.TemplateCreature;
+import dev.aidang.encounters.model.creatures.TemplateCreatureSummary;
 import dev.aidang.encounters.service.TemplateCreatureService;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -19,7 +20,8 @@ public class TemplateCreatureController {
     }
 
     @GetMapping("/monsters")
-    public Page<TemplateCreature> getMonsters(Pageable pageable, @RequestParam("name") String name) {
+    public Page<TemplateCreatureSummary> getMonsters(
+            Pageable pageable, @RequestParam(value = "name", required = false) String name) {
         return templateCreatureService.searchMonsters(pageable, name);
     }
 

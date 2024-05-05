@@ -8,6 +8,7 @@ import dev.aidang.encounters.model.creatures.CreatureSize;
 import dev.aidang.encounters.model.creatures.FifthEditionDatabaseCreature;
 import dev.aidang.encounters.model.creatures.MPMBCreature;
 import dev.aidang.encounters.model.creatures.TemplateCreature;
+import dev.aidang.encounters.model.creatures.TemplateCreatureSummary;
 import dev.aidang.encounters.repository.TemplateCreatureRepository;
 import jakarta.annotation.PostConstruct;
 import java.io.IOException;
@@ -17,6 +18,7 @@ import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Component;
 
@@ -45,11 +47,19 @@ public class TemplateCreatureService {
         }
     }
 
-    public Page<TemplateCreature> searchMonsters(Pageable pageable, String name) {
+    public Page<TemplateCreatureSummary> searchMonsters(Pageable pageable, String name) {
         if (name == null) {
-            return templateCreatureRepository.findAll(pageable);
+            return templateCreatureRepository.findAllProjectedBy(pageable);
         }
-        return templateCreatureRepository.findByName(pageable, name);
+        List<TemplateCreatureSummary> items = templateCreatureRepository.findSummaryByNameContaining(
+                name, pageable.getPageSize(), pageable.getOffset());
+        if (pageable.getPageNumber() == 0 && items.size() < pageable.getPageSize()) {
+            // Optimisation for narrow searches
+            return new PageImpl<>(items, pageable, items.size());
+        } else {
+            int total = templateCreatureRepository.countSummaryByNameContaining(name);
+            return new PageImpl<>(items, pageable, total);
+        }
     }
 
     public TemplateCreature getMonster(Long id) {

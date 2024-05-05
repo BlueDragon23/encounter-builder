@@ -3,6 +3,17 @@
 	import type { components } from '$lib/generated/client';
 	import MonsterStats from './MonsterStats.svelte';
 
+	const formatter = new Intl.NumberFormat(undefined, {
+		signDisplay: 'always'
+	});
+	function abilityScoreModifier(score?: number): string {
+		if (score) {
+			const mod = Math.floor((score - 10) / 2);
+			return `(${formatter.format(mod)})`;
+		}
+		return '';
+	}
+
 	export let details: components['schemas']['TemplateCreature'];
 </script>
 
@@ -39,12 +50,30 @@
 				</thead>
 				<tbody>
 					<tr>
-						<td class="text-center">{details.abilityScores.strength}</td>
-						<td class="text-center">{details.abilityScores.dexterity}</td>
-						<td class="text-center">{details.abilityScores.constitution}</td>
-						<td class="text-center">{details.abilityScores.intelligence}</td>
-						<td class="text-center">{details.abilityScores.wisdom}</td>
-						<td class="text-center">{details.abilityScores.charisma}</td>
+						<td class="text-center"
+							>{details.abilityScores.strength}
+							{abilityScoreModifier(details.abilityScores.strength)}</td
+						>
+						<td class="text-center"
+							>{details.abilityScores.dexterity}
+							{abilityScoreModifier(details.abilityScores.dexterity)}</td
+						>
+						<td class="text-center"
+							>{details.abilityScores.constitution}
+							{abilityScoreModifier(details.abilityScores.constitution)}</td
+						>
+						<td class="text-center"
+							>{details.abilityScores.intelligence}
+							{abilityScoreModifier(details.abilityScores.intelligence)}</td
+						>
+						<td class="text-center"
+							>{details.abilityScores.wisdom}
+							{abilityScoreModifier(details.abilityScores.wisdom)}</td
+						>
+						<td class="text-center"
+							>{details.abilityScores.charisma}
+							{abilityScoreModifier(details.abilityScores.charisma)}</td
+						>
 					</tr>
 				</tbody>
 			</table>

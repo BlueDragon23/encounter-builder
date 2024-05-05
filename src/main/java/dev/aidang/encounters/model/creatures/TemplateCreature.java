@@ -48,6 +48,20 @@ public record TemplateCreature(
                 .withSavingThrows(savingThrows);
     }
 
+    public TemplateCreatureSummary toSummary() {
+        return new TemplateCreatureSummary(
+                id,
+                name,
+                description,
+                creatureSize,
+                type,
+                alignment,
+                armorClass,
+                challengeRating,
+                proficiencyBonus,
+                hitpoints);
+    }
+
     public static final class Builder {
 
         private Long id;
