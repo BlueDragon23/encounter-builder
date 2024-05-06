@@ -23,7 +23,7 @@ class EncounterControllerIT extends RestTestBase {
         // when
         Encounter requestEncounter = new Encounter(null, "name", "description", List.of());
         HttpRequest request = HttpRequest.newBuilder()
-                .uri(URI.create("http://localhost:" + port + "/encounter"))
+                .uri(URI.create("http://localhost:" + port + "/encounters"))
                 .header("Content-Type", MimeTypeUtils.APPLICATION_JSON_VALUE)
                 .POST(HttpRequest.BodyPublishers.ofString(JSON.writeValueAsString(requestEncounter)))
                 .build();

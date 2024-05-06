@@ -1,8 +1,19 @@
 import type { components, paths } from '$lib/generated/client';
 import createClient, { type QuerySerializerOptions } from 'openapi-fetch';
 
+export type SvelteFetch = (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+
 export function withHost(path: string): string {
 	return `http://localhost:8080${path}`;
+}
+
+export function pageable(url: URL): components['schemas']['Pageable'] {
+	const page = parseInt(url.searchParams.get('page') ?? '0');
+	const size = parseInt(url.searchParams.get('size') ?? '20');
+	return {
+		page,
+		size
+	};
 }
 
 /**

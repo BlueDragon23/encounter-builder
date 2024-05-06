@@ -1,7 +1,8 @@
-<script>
+<script lang="ts">
 	import EncounterCard from '$lib/EncounterCard.svelte';
+	import type { EncountersPageData } from './+page';
 
-	export let data;
+	export let data: EncountersPageData;
 </script>
 
 <div class="p-4">
@@ -13,9 +14,13 @@
 
 	<div class="flex flex-col items-center mt-4">
 		<ul class="list md:container md:mx-auto">
-			{#each data.encounters as encounter}
-				<li><EncounterCard {...encounter} /></li>
-			{/each}
+			{#await data.encounters then encounters}
+				{#if encounters && encounters.content}
+					{#each encounters.content as encounter}
+						<li><EncounterCard {encounter} /></li>
+					{/each}
+				{/if}
+			{/await}
 		</ul>
 	</div>
 </div>

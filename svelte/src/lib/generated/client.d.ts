@@ -5,7 +5,8 @@
 
 
 export interface paths {
-  "/encounter": {
+  "/encounters": {
+    get: operations["getEncounters"];
     post: operations["createEncounter"];
   };
   "/monsters": {
@@ -14,7 +15,7 @@ export interface paths {
   "/monsters/{id}": {
     get: operations["getMonster"];
   };
-  "/encounter/{name}": {
+  "/encounters/{name}": {
     get: operations["getEncounter"];
   };
 }
@@ -67,10 +68,10 @@ export interface components {
       empty?: boolean;
     };
     PageableObject: {
-      paged?: boolean;
-      unpaged?: boolean;
       /** Format: int32 */
       pageNumber?: number;
+      paged?: boolean;
+      unpaged?: boolean;
       /** Format: int32 */
       pageSize?: number;
       /** Format: int64 */
@@ -184,6 +185,30 @@ export interface components {
       specialAbilities?: components["schemas"]["SpecialAbility"][];
       savingThrows?: ("STRENGTH" | "DEXTERITY" | "CONSTITUTION" | "INTELLIGENCE" | "WISDOM" | "CHARISMA")[];
     };
+    EncounterSummary: {
+      /** Format: int64 */
+      id?: number;
+      name?: string;
+      description?: string;
+    };
+    PageEncounterSummary: {
+      /** Format: int32 */
+      totalPages?: number;
+      /** Format: int64 */
+      totalElements?: number;
+      pageable?: components["schemas"]["PageableObject"];
+      /** Format: int32 */
+      numberOfElements?: number;
+      /** Format: int32 */
+      size?: number;
+      content?: components["schemas"]["EncounterSummary"][];
+      /** Format: int32 */
+      number?: number;
+      sort?: components["schemas"]["SortObject"][];
+      first?: boolean;
+      last?: boolean;
+      empty?: boolean;
+    };
   };
   responses: never;
   parameters: never;
@@ -198,6 +223,27 @@ export type external = Record<string, never>;
 
 export interface operations {
 
+  getEncounters: {
+    parameters: {
+      query: {
+        pageable: components["schemas"]["Pageable"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "*/*": components["schemas"]["PageEncounterSummary"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "*/*": string;
+        };
+      };
+    };
+  };
   createEncounter: {
     requestBody: {
       content: {

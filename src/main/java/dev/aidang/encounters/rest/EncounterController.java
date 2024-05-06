@@ -1,16 +1,20 @@
 package dev.aidang.encounters.rest;
 
-import dev.aidang.encounters.NotFoundException;
 import dev.aidang.encounters.model.Encounter;
+import dev.aidang.encounters.model.EncounterSummary;
 import dev.aidang.encounters.repository.EncounterRepository;
 import java.net.URI;
-import java.util.stream.StreamSupport;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@CrossOrigin("localhost:5173")
 public class EncounterController {
 
     private final EncounterRepository encounterRepository;
@@ -20,15 +24,17 @@ public class EncounterController {
         this.encounterRepository = encounterRepository;
     }
 
-    @GetMapping("/encounter/{name}")
-    public Encounter getEncounter(@PathVariable("name") String encounterName) {
-        return StreamSupport.stream(encounterRepository.findAll().spliterator(), true)
-                .filter(e -> e.name().equals(encounterName))
-                .findAny()
-                .orElseThrow(() -> new NotFoundException("Failed to find encounter " + encounterName));
+    @GetMapping("/encounters")
+    public Page<EncounterSummary> getEncounters(Pageable pageable) {
+        return encounterRepository.findAllProjectedBy(pageable);
     }
 
-    @PostMapping("/encounter")
+    @GetMapping("/encounters/{name}")
+    public Encounter getEncounter(@PathVariable("name") String encounterName) {
+        return encounterRepository.findByNameIgnoreCase(encounterName);
+    }
+
+    @PostMapping("/encounters")
     public ResponseEntity<Encounter> createEncounter(@RequestBody Encounter encounter) {
         return ResponseEntity.created(URI.create("/encounter/" + encounter.name()))
                 .body(encounterRepository.save(encounter));

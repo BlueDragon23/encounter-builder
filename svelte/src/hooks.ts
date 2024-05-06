@@ -1,4 +1,4 @@
-import type { HandleClientError, HandleFetch } from '@sveltejs/kit';
+import type { HandleClientError, HandleFetch, HandleServerError } from '@sveltejs/kit';
 
 export const handleError: HandleClientError = async ({ error, event, status, message }) => {
 	console.error(error);

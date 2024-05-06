@@ -1,9 +1,7 @@
 import { useTestData } from '$lib';
 import type { components, operations } from '$lib/generated/client';
 import { TestDataGenerator } from '$lib/test';
-import { client, pageableQuerySerialiser } from './utils';
-
-type SvelteFetch = (input: RequestInfo | URL, init?: RequestInit) => Promise<Response>;
+import { client, pageableQuerySerialiser, type SvelteFetch } from './utils';
 
 export async function getMonster(
 	id: number,
