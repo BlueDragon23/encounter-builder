@@ -37,3 +37,14 @@ export async function getEncounter(
 	}
 	return data;
 }
+
+export async function createEncounter(
+	encounter: components['schemas']['Encounter'],
+	fetch: SvelteFetch
+): Promise<components['schemas']['Encounter'] | undefined> {
+	const { data, error } = await client.POST('/encounters', {
+		body: encounter,
+		fetch
+	});
+	return data;
+}

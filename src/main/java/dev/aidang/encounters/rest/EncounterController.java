@@ -1,5 +1,6 @@
 package dev.aidang.encounters.rest;
 
+import dev.aidang.encounters.NotFoundException;
 import dev.aidang.encounters.model.Encounter;
 import dev.aidang.encounters.model.EncounterSummary;
 import dev.aidang.encounters.repository.EncounterRepository;
@@ -29,9 +30,11 @@ public class EncounterController {
         return encounterRepository.findAllProjectedBy(pageable);
     }
 
-    @GetMapping("/encounters/{name}")
-    public Encounter getEncounter(@PathVariable("name") String encounterName) {
-        return encounterRepository.findByNameIgnoreCase(encounterName);
+    @GetMapping("/encounters/{id}")
+    public Encounter getEncounter(@PathVariable("id") Long id) {
+        return encounterRepository
+                .findById(id)
+                .orElseThrow(() -> new NotFoundException("Encounter with ID=%d does not exist".formatted(id)));
     }
 
     @PostMapping("/encounters")

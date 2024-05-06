@@ -15,7 +15,7 @@ export interface paths {
   "/monsters/{id}": {
     get: operations["getMonster"];
   };
-  "/encounters/{name}": {
+  "/encounters/{id}": {
     get: operations["getEncounter"];
   };
 }
@@ -68,10 +68,10 @@ export interface components {
       empty?: boolean;
     };
     PageableObject: {
-      /** Format: int32 */
-      pageNumber?: number;
       paged?: boolean;
       unpaged?: boolean;
+      /** Format: int32 */
+      pageNumber?: number;
       /** Format: int32 */
       pageSize?: number;
       /** Format: int64 */
@@ -311,7 +311,7 @@ export interface operations {
   getEncounter: {
     parameters: {
       path: {
-        name: string;
+        id: number;
       };
     };
     responses: {
