@@ -1,15 +1,18 @@
 <script lang="ts">
-	import EncounterCard from '$lib/EncounterCard.svelte';
-	import type { components } from '$lib/generated/client';
+	import type { EncounterPageData } from './+page';
 
-	export let data: Promise<components['schemas']['Encounter'] | undefined>;
+	export let data: EncounterPageData;
+	const encounter = data.encounter;
 </script>
 
-<div class="p-4">
-	{#await data then encounter}
-		{#if encounter}
-			<h1 class="h1">{encounter.name}</h1>
-			<EncounterCard {encounter} />
-		{/if}
-	{/await}
-</div>
+<h1 class="h1">{encounter.name}</h1>
+<p class="my-4">{encounter.description}</p>
+{#await data.encounterMonsters then monsters}
+	{#if encounter.creatures}
+		<ul>
+			{#each encounter.creatures as creature}
+				<li>{monsters[creature.id ?? 0].name} - {creature.count}</li>
+			{/each}
+		</ul>
+	{/if}
+{/await}

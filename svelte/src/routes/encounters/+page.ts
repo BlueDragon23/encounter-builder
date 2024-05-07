@@ -5,7 +5,7 @@ import type { components } from '$lib/generated/client.js';
 import { pageable } from '$lib/rest/utils.js';
 
 export interface EncountersPageData {
-	encounters: Promise<components['schemas']['PageEncounterSummary'] | undefined>;
+	encounters: Promise<components['schemas']['PageEncounterSummary']>;
 }
 
 export function load({ url, fetch }): EncountersPageData {

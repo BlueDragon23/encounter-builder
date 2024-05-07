@@ -6,7 +6,7 @@ import { client, pageableQuerySerialiser, type SvelteFetch } from './utils';
 export async function getMonster(
 	id: number,
 	fetch: SvelteFetch
-): Promise<components['schemas']['TemplateCreature'] | undefined> {
+): Promise<components['schemas']['TemplateCreature']> {
 	const testData = useTestData();
 	if (testData) {
 		return { ...TestDataGenerator.getMonster(), id };
@@ -22,6 +22,9 @@ export async function getMonster(
 		if (error) {
 			console.error(error);
 		}
+		if (!data) {
+			throw new Error('Expected monster, but found nothing');
+		}
 		return data;
 	}
 }
@@ -30,7 +33,7 @@ export async function getMonsters(
 	pageable: components['schemas']['Pageable'],
 	fetch: SvelteFetch,
 	query: Omit<operations['getMonsters']['parameters']['query'], 'pageable'>
-): Promise<components['schemas']['PageTemplateCreatureSummary'] | undefined> {
+): Promise<components['schemas']['PageTemplateCreatureSummary']> {
 	const testData = useTestData();
 	if (testData) {
 		return {
@@ -67,6 +70,9 @@ export async function getMonsters(
 		});
 		if (error) {
 			console.error(error);
+		}
+		if (!data) {
+			throw new Error('Expected monsters, but found nothing');
 		}
 		return data;
 	}
