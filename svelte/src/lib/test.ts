@@ -1,4 +1,6 @@
+import type { ExistingEncounter } from './encounters/types';
 import type { components } from './generated/client';
+import type { ExistingTemplateCreature } from './monsters/types';
 
 const LOREM_IPSUM = `
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Praesent feugiat nibh quam, vitae elementum nunc placerat facilisis. Proin malesuada, velit vel varius pulvinar, lectus massa auctor diam, ultrices tincidunt massa lorem et risus. Vestibulum ac enim in nisl maximus imperdiet. Suspendisse in tortor congue, interdum turpis sed, scelerisque orci. Cras cursus sapien orci, vitae commodo nunc imperdiet vitae. Phasellus et laoreet quam. Nam lectus ex, tristique at est eget, auctor aliquet elit. Nunc ante sapien, dapibus id odio sed, bibendum suscipit nibh. Cras tristique nibh convallis, pulvinar lorem eget, consequat dui. In in felis volutpat augue sodales venenatis. Donec eget quam vel arcu porttitor luctus.
@@ -6,7 +8,7 @@ Suspendisse vel porta mauris. Nunc suscipit in lectus et eleifend. Praesent ut m
 Nam tempor non ante vel fermentum. Morbi ac convallis velit. Nulla tempus mauris tempus nisl lobortis pharetra. Etiam mollis auctor urna in tristique. Donec venenatis vulputate velit, vitae faucibus nisl laoreet a. Vivamus libero ex, aliquam nec augue quis, efficitur scelerisque elit. Nullam condimentum ante nec est rhoncus, id vehicula justo consequat. Sed finibus sem fringilla, tincidunt mauris et, ornare orci. Cras venenatis ultrices orci, lacinia vulputate metus eleifend vel. Nam porta arcu lacus, id varius nulla tristique ut. Nullam magna est, fermentum vitae semper quis, euismod venenatis diam. Mauris id justo elit. 
 `.split(' ');
 
-function getEncounter(): components['schemas']['Encounter'] {
+function getEncounter(): ExistingEncounter {
 	let arr = new Uint8Array(8);
 	crypto.getRandomValues(arr);
 
@@ -18,7 +20,7 @@ function getEncounter(): components['schemas']['Encounter'] {
 	};
 }
 
-function getMonster(): components['schemas']['TemplateCreature'] {
+function getMonster(): ExistingTemplateCreature {
 	let arr = new Uint8Array(8);
 	crypto.getRandomValues(arr);
 
@@ -48,8 +50,8 @@ function getMonster(): components['schemas']['TemplateCreature'] {
 }
 
 export interface GenerateTestData {
-	getEncounter(): components['schemas']['Encounter'];
-	getMonster(): components['schemas']['TemplateCreature'];
+	getEncounter(): ExistingEncounter;
+	getMonster(): ExistingTemplateCreature;
 }
 
 export const TestDataGenerator: GenerateTestData = {

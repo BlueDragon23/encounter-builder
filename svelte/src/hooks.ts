@@ -1,4 +1,4 @@
-import type { HandleClientError, HandleFetch, HandleServerError } from '@sveltejs/kit';
+import type { HandleClientError, HandleFetch } from '@sveltejs/kit';
 
 export const handleError: HandleClientError = async ({ error, event, status, message }) => {
 	console.error(error);
@@ -8,6 +8,7 @@ export const handleError: HandleClientError = async ({ error, event, status, mes
 };
 
 export const handleFetch: HandleFetch = async ({ request, fetch }) => {
+	console.log(`Rewriting request ${request} with URL ${request.url}`);
 	if (request.url.startsWith('http://localhost')) {
 		request = new Request(request.url.replace('http://localhost', 'http://web'), request);
 	}

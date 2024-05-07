@@ -12,6 +12,7 @@ services:
       - db_password
   frontend:
     image: aidang/encounter-builder-ui-dev:latest
+    restart: always
     volumes:
       - type: bind
         source: ../svelte/src

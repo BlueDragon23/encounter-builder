@@ -1,12 +1,13 @@
 import { useTestData } from '$lib';
 import type { components, operations } from '$lib/generated/client';
+import type { ExistingTemplateCreature } from '$lib/monsters/types';
 import { TestDataGenerator } from '$lib/test';
 import { client, pageableQuerySerialiser, type SvelteFetch } from './utils';
 
 export async function getMonster(
 	id: number,
 	fetch: SvelteFetch
-): Promise<components['schemas']['TemplateCreature']> {
+): Promise<ExistingTemplateCreature> {
 	const testData = useTestData();
 	if (testData) {
 		return { ...TestDataGenerator.getMonster(), id };
@@ -25,7 +26,7 @@ export async function getMonster(
 		if (!data) {
 			throw new Error('Expected monster, but found nothing');
 		}
-		return data;
+		return <ExistingTemplateCreature>data;
 	}
 }
 

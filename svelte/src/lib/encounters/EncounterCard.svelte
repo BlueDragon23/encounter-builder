@@ -1,5 +1,5 @@
 <script lang="ts">
-	import type { components } from './generated/client';
+	import type { components } from '../generated/client';
 
 	export let encounter: components['schemas']['EncounterSummary'];
 </script>

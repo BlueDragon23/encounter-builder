@@ -82,13 +82,13 @@
 
 	<!-- Saving throws, proficiencies -->
 	<ul>
-		{#if details.savingThrows !== undefined && details.savingThrows.length > 0}
+		{#if details.savingThrows}
 			<li>Saving Throw Proficiencies: {details.savingThrows.join(', ')}</li>
 		{/if}
 	</ul>
 
 	<!-- Special abilities (including spellcasting) -->
-	{#if details.specialAbilities !== undefined}
+	{#if details.specialAbilities && details.specialAbilities.length > 0}
 		<h2 class="h2">Special Abilities</h2>
 		<ul>
 			{#each details.specialAbilities as specialAbility}
@@ -101,33 +101,29 @@
 	{/if}
 
 	<!-- Actions -->
-	{#if details.attacks !== undefined}
+	{#if details.attacks && details.attacks.some((a) => a.attackType == 'ACTION')}
 		<h2 class="h2">Actions</h2>
 		<ul>
-			{#each details.attacks as attack}
-				{#if attack.attackType == 'ACTION'}
-					<li>
-						<b>{attack.name}. </b>
-						<p>{attack.description}</p>
-					</li>
-				{/if}
+			{#each details.attacks.filter((a) => a.attackType == 'ACTION') as attack}
+				<li>
+					<b>{attack.name}. </b>
+					<p>{attack.description}</p>
+				</li>
 			{/each}
 		</ul>
 	{/if}
 
 	<!-- Legendary Actions -->
-	{#if details.attacks !== undefined}
-		{#if details.attacks.some((a) => a.attackType == 'LEGENDARY')}
-			<h2 class="h2">Legendary Actions</h2>
-			<ul>
-				{#each details.attacks.filter((a) => a.attackType == 'LEGENDARY') as action}
-					<li>
-						<b>{action.name}. </b>
-						<p>{action.description}</p>
-					</li>
-				{/each}
-			</ul>
-		{/if}
+	{#if details.attacks && details.attacks.some((a) => a.attackType == 'LEGENDARY')}
+		<h2 class="h2">Legendary Actions</h2>
+		<ul>
+			{#each details.attacks.filter((a) => a.attackType == 'LEGENDARY') as action}
+				<li>
+					<b>{action.name}. </b>
+					<p>{action.description}</p>
+				</li>
+			{/each}
+		</ul>
 	{/if}
 
 	<!-- Description -->

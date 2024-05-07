@@ -1,5 +1,5 @@
 <script lang="ts">
-	import EncounterCard from '$lib/EncounterCard.svelte';
+	import EncounterCard from '$lib/encounters/EncounterCard.svelte';
 	import type { EncountersPageData } from './+page';
 
 	export let data: EncountersPageData;
