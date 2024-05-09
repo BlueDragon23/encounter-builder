@@ -7,7 +7,7 @@ import org.springframework.data.relational.core.mapping.MappedCollection;
 public record Encounter(
         @Id Long id, String name, String description, @MappedCollection List<EncounterCreatureRef> creatures) {
 
-    public Builder builder() {
+    public static Builder builder() {
         return new Builder();
     }
 

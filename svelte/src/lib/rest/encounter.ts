@@ -55,6 +55,22 @@ export async function createEncounter(
 	return <ExistingEncounter>data;
 }
 
+export async function updateEncounter(encounter: ExistingEncounter, fetch: SvelteFetch) {
+	const { data, error } = await client.POST('/encounters/{id}/edit', {
+		body: encounter,
+		params: {
+			path: {
+				id: encounter.id
+			}
+		},
+		fetch
+	});
+	if (error) {
+		console.error(error);
+	}
+	return <ExistingEncounter>data;
+}
+
 export type EncounterMonsters = { [key: number]: ExistingTemplateCreature };
 
 export async function getEncounterMonsters(

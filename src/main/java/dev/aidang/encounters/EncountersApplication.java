@@ -1,5 +1,6 @@
 package dev.aidang.encounters;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
@@ -22,5 +23,10 @@ public class EncountersApplication {
                 registry.addMapping("/**").allowedOrigins("http://localhost:5173");
             }
         };
+    }
+
+    @Bean
+    public ObjectMapper objectMapper() {
+        return Utils.JSON;
     }
 }

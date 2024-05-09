@@ -1,7 +1,7 @@
 import type { components } from '$lib/generated/client';
 import type { RequiredFields } from '$lib/types';
 
-type ExistingEncounterCreatureRef = Omit<
+export type ExistingEncounterCreatureRef = Omit<
 	RequiredFields<components['schemas']['EncounterCreatureRef'], 'id' | 'count'>,
 	'templateCreature'
 > & {

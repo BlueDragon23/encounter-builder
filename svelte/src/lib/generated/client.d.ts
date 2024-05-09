@@ -9,6 +9,9 @@ export interface paths {
     get: operations["getEncounters"];
     post: operations["createEncounter"];
   };
+  "/encounters/{id}/edit": {
+    post: operations["updateEncounter"];
+  };
   "/monsters": {
     get: operations["getMonsters"];
   };
@@ -245,6 +248,32 @@ export interface operations {
     };
   };
   createEncounter: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["Encounter"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "*/*": components["schemas"]["Encounter"];
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "*/*": string;
+        };
+      };
+    };
+  };
+  updateEncounter: {
+    parameters: {
+      path: {
+        id: number;
+      };
+    };
     requestBody: {
       content: {
         "application/json": components["schemas"]["Encounter"];

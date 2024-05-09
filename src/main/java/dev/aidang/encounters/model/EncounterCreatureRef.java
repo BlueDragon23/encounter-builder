@@ -35,6 +35,11 @@ public record EncounterCreatureRef(
             return this;
         }
 
+        public Builder withTemplateCreature(TemplateCreature creature) {
+            this.templateCreature = AggregateReference.to(creature.id());
+            return this;
+        }
+
         public Builder withCount(int count) {
             this.count = count;
             return this;
