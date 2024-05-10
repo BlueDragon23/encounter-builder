@@ -43,6 +43,7 @@
 	},
 	"type": "module",
 	"dependencies": {
+		"@floating-ui/dom": "^1.6.5",
 		"openapi-fetch": "^0.9.5"
 	}
 }
