@@ -1,6 +1,8 @@
 package dev.aidang.encounters.model.creatures;
 
 import dev.aidang.encounters.model.Dice;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.Size;
 import java.util.List;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Embedded;
@@ -11,18 +13,18 @@ import org.springframework.data.relational.core.mapping.MappedCollection;
  */
 public record TemplateCreature(
         @Id Long id,
-        String name,
-        String description,
+        @Size(min = 1, max = 255) String name,
+        @Size(min = 1, max = 65535) String description,
         CreatureSize creatureSize,
-        String type,
-        String alignment,
-        int armorClass,
-        float challengeRating,
-        int proficiencyBonus,
-        int hitpoints,
-        @Embedded.Empty(prefix = "dice_") Dice hitDice,
+        @Size(max = 255) String type,
+        @Size(max = 255) String alignment,
+        @Min(0) int armorClass,
+        @Min(0) float challengeRating,
+        @Min(0) int proficiencyBonus,
+        @Min(1) int hitpoints,
+        @Embedded.Nullable(prefix = "dice_") Dice hitDice,
         @Embedded.Empty(prefix = "speed_") Speed speed,
-        @Embedded.Empty(prefix = "ability_") AbilityScores abilityScores,
+        @Embedded.Nullable(prefix = "ability_") AbilityScores abilityScores,
         // TODO: child tables?
         @MappedCollection List<Attack> attacks,
         @MappedCollection List<SpecialAbility> specialAbilities,

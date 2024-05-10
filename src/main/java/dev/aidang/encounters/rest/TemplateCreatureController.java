@@ -7,6 +7,8 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -23,6 +25,11 @@ public class TemplateCreatureController {
     public Page<TemplateCreatureSummary> getMonsters(
             Pageable pageable, @RequestParam(value = "name", required = false) String name) {
         return templateCreatureService.searchMonsters(pageable, name);
+    }
+
+    @PostMapping("/monsters")
+    public TemplateCreature createMonster(@RequestBody TemplateCreature templateCreature) {
+        return templateCreatureService.createMonster(templateCreature);
     }
 
     @GetMapping("/monsters/{id}")

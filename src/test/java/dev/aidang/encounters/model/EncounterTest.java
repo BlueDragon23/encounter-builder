@@ -16,11 +16,9 @@ class EncounterTest {
     private static final String SERIALISED_ENCOUNTER =
             """
             {
-                "id": null,
                 "name": "Test Encounter",
                 "description": "This is a random description of my encounter",
                 "creatures": [{
-                    "id": null,
                     "templateCreature": {
                         "id": 10
                     },

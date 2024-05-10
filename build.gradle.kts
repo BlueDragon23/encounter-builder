@@ -41,6 +41,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-data-jdbc")
     implementation("org.springframework.boot:spring-boot-starter-web")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.5.0")
+    implementation("org.hibernate.validator:hibernate-validator:8.0.1.Final")
 
     // junit
     testImplementation(platform("org.junit:junit-bom:5.10.2"))

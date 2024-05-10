@@ -7,5 +7,13 @@
 
 <div>
 	<label for={name}>{label}</label>
-	<input type="number" id={name} {name} class="input text-token" {min} {max} {...$$restProps} />
+	<input
+		type="number"
+		id={name}
+		{name}
+		class="input text-token max-w-24"
+		{min}
+		{max}
+		{...$$restProps}
+	/>
 </div>

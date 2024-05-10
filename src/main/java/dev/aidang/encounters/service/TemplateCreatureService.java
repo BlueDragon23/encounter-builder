@@ -70,6 +70,10 @@ public class TemplateCreatureService {
         return creature.get();
     }
 
+    public TemplateCreature createMonster(TemplateCreature creature) {
+        return templateCreatureRepository.save(creature);
+    }
+
     public TemplateCreature importCreatureFromFifthEditionDatabase(
             FifthEditionDatabaseCreature fifthEditionDatabaseCreature) {
         TemplateCreature templateCreature = fifthEditionDatabaseCreature.toTemplateCreature();

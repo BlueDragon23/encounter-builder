@@ -5,15 +5,16 @@
 
 
 export interface paths {
+  "/monsters": {
+    get: operations["getMonsters"];
+    post: operations["createMonster"];
+  };
   "/encounters": {
     get: operations["getEncounters"];
     post: operations["createEncounter"];
   };
   "/encounters/{id}/edit": {
     post: operations["updateEncounter"];
-  };
-  "/monsters": {
-    get: operations["getMonsters"];
   };
   "/monsters/{id}": {
     get: operations["getMonster"];
@@ -27,85 +28,6 @@ export type webhooks = Record<string, never>;
 
 export interface components {
   schemas: {
-    AggregateReferenceTemplateCreatureLong: {
-      /** Format: int64 */
-      id?: number;
-    };
-    Encounter: {
-      /** Format: int64 */
-      id?: number;
-      name?: string;
-      description?: string;
-      creatures?: components["schemas"]["EncounterCreatureRef"][];
-    };
-    EncounterCreatureRef: {
-      /** Format: int64 */
-      id?: number;
-      templateCreature?: components["schemas"]["AggregateReferenceTemplateCreatureLong"];
-      /** Format: int32 */
-      count?: number;
-    };
-    Pageable: {
-      /** Format: int32 */
-      page?: number;
-      /** Format: int32 */
-      size?: number;
-      sort?: string[];
-    };
-    PageTemplateCreatureSummary: {
-      /** Format: int32 */
-      totalPages?: number;
-      /** Format: int64 */
-      totalElements?: number;
-      pageable?: components["schemas"]["PageableObject"];
-      /** Format: int32 */
-      numberOfElements?: number;
-      /** Format: int32 */
-      size?: number;
-      content?: components["schemas"]["TemplateCreatureSummary"][];
-      /** Format: int32 */
-      number?: number;
-      sort?: components["schemas"]["SortObject"][];
-      first?: boolean;
-      last?: boolean;
-      empty?: boolean;
-    };
-    PageableObject: {
-      paged?: boolean;
-      unpaged?: boolean;
-      /** Format: int32 */
-      pageNumber?: number;
-      /** Format: int32 */
-      pageSize?: number;
-      /** Format: int64 */
-      offset?: number;
-      sort?: components["schemas"]["SortObject"][];
-    };
-    SortObject: {
-      direction?: string;
-      nullHandling?: string;
-      ascending?: boolean;
-      property?: string;
-      ignoreCase?: boolean;
-    };
-    TemplateCreatureSummary: {
-      /** Format: int64 */
-      id?: number;
-      name?: string;
-      description?: string;
-      /** @enum {string} */
-      creatureSize?: "TINY" | "SMALL" | "MEDIUM" | "LARGE" | "HUGE" | "GARGANTUAN";
-      type?: string;
-      alignment?: string;
-      /** Format: int32 */
-      armorClass?: number;
-      /** Format: float */
-      challengeRating?: number;
-      /** Format: int32 */
-      proficiencyBonus?: number;
-      /** Format: int32 */
-      hitpoints?: number;
-    };
     AbilityScores: {
       /** Format: int32 */
       strength?: number;
@@ -188,6 +110,85 @@ export interface components {
       specialAbilities?: components["schemas"]["SpecialAbility"][];
       savingThrows?: ("STRENGTH" | "DEXTERITY" | "CONSTITUTION" | "INTELLIGENCE" | "WISDOM" | "CHARISMA")[];
     };
+    AggregateReferenceTemplateCreatureLong: {
+      /** Format: int64 */
+      id?: number;
+    };
+    Encounter: {
+      /** Format: int64 */
+      id?: number;
+      name?: string;
+      description?: string;
+      creatures?: components["schemas"]["EncounterCreatureRef"][];
+    };
+    EncounterCreatureRef: {
+      /** Format: int64 */
+      id?: number;
+      templateCreature?: components["schemas"]["AggregateReferenceTemplateCreatureLong"];
+      /** Format: int32 */
+      count?: number;
+    };
+    Pageable: {
+      /** Format: int32 */
+      page?: number;
+      /** Format: int32 */
+      size?: number;
+      sort?: string[];
+    };
+    PageTemplateCreatureSummary: {
+      /** Format: int32 */
+      totalPages?: number;
+      /** Format: int64 */
+      totalElements?: number;
+      pageable?: components["schemas"]["PageableObject"];
+      /** Format: int32 */
+      numberOfElements?: number;
+      /** Format: int32 */
+      size?: number;
+      content?: components["schemas"]["TemplateCreatureSummary"][];
+      /** Format: int32 */
+      number?: number;
+      sort?: components["schemas"]["SortObject"][];
+      first?: boolean;
+      last?: boolean;
+      empty?: boolean;
+    };
+    PageableObject: {
+      /** Format: int32 */
+      pageNumber?: number;
+      paged?: boolean;
+      unpaged?: boolean;
+      /** Format: int32 */
+      pageSize?: number;
+      /** Format: int64 */
+      offset?: number;
+      sort?: components["schemas"]["SortObject"][];
+    };
+    SortObject: {
+      direction?: string;
+      nullHandling?: string;
+      ascending?: boolean;
+      property?: string;
+      ignoreCase?: boolean;
+    };
+    TemplateCreatureSummary: {
+      /** Format: int64 */
+      id?: number;
+      name?: string;
+      description?: string;
+      /** @enum {string} */
+      creatureSize?: "TINY" | "SMALL" | "MEDIUM" | "LARGE" | "HUGE" | "GARGANTUAN";
+      type?: string;
+      alignment?: string;
+      /** Format: int32 */
+      armorClass?: number;
+      /** Format: float */
+      challengeRating?: number;
+      /** Format: int32 */
+      proficiencyBonus?: number;
+      /** Format: int32 */
+      hitpoints?: number;
+    };
     EncounterSummary: {
       /** Format: int64 */
       id?: number;
@@ -226,6 +227,73 @@ export type external = Record<string, never>;
 
 export interface operations {
 
+  getMonsters: {
+    parameters: {
+      query: {
+        pageable: components["schemas"]["Pageable"];
+        name?: string;
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "*/*": components["schemas"]["PageTemplateCreatureSummary"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "*/*": string;
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "*/*": string;
+        };
+      };
+      /** @description Conflict */
+      409: {
+        content: {
+          "*/*": string;
+        };
+      };
+    };
+  };
+  createMonster: {
+    requestBody: {
+      content: {
+        "application/json": components["schemas"]["TemplateCreature"];
+      };
+    };
+    responses: {
+      /** @description OK */
+      200: {
+        content: {
+          "*/*": components["schemas"]["TemplateCreature"];
+        };
+      };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "*/*": string;
+        };
+      };
+      /** @description Not Found */
+      404: {
+        content: {
+          "*/*": string;
+        };
+      };
+      /** @description Conflict */
+      409: {
+        content: {
+          "*/*": string;
+        };
+      };
+    };
+  };
   getEncounters: {
     parameters: {
       query: {
@@ -239,8 +307,20 @@ export interface operations {
           "*/*": components["schemas"]["PageEncounterSummary"];
         };
       };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "*/*": string;
+        };
+      };
       /** @description Not Found */
       404: {
+        content: {
+          "*/*": string;
+        };
+      };
+      /** @description Conflict */
+      409: {
         content: {
           "*/*": string;
         };
@@ -260,8 +340,20 @@ export interface operations {
           "*/*": components["schemas"]["Encounter"];
         };
       };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "*/*": string;
+        };
+      };
       /** @description Not Found */
       404: {
+        content: {
+          "*/*": string;
+        };
+      };
+      /** @description Conflict */
+      409: {
         content: {
           "*/*": string;
         };
@@ -286,30 +378,20 @@ export interface operations {
           "*/*": components["schemas"]["Encounter"];
         };
       };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "*/*": string;
+        };
+      };
       /** @description Not Found */
       404: {
         content: {
           "*/*": string;
         };
       };
-    };
-  };
-  getMonsters: {
-    parameters: {
-      query: {
-        pageable: components["schemas"]["Pageable"];
-        name?: string;
-      };
-    };
-    responses: {
-      /** @description OK */
-      200: {
-        content: {
-          "*/*": components["schemas"]["PageTemplateCreatureSummary"];
-        };
-      };
-      /** @description Not Found */
-      404: {
+      /** @description Conflict */
+      409: {
         content: {
           "*/*": string;
         };
@@ -329,8 +411,20 @@ export interface operations {
           "*/*": components["schemas"]["TemplateCreature"];
         };
       };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "*/*": string;
+        };
+      };
       /** @description Not Found */
       404: {
+        content: {
+          "*/*": string;
+        };
+      };
+      /** @description Conflict */
+      409: {
         content: {
           "*/*": string;
         };
@@ -350,8 +444,20 @@ export interface operations {
           "*/*": components["schemas"]["Encounter"];
         };
       };
+      /** @description Bad Request */
+      400: {
+        content: {
+          "*/*": string;
+        };
+      };
       /** @description Not Found */
       404: {
+        content: {
+          "*/*": string;
+        };
+      };
+      /** @description Conflict */
+      409: {
         content: {
           "*/*": string;
         };

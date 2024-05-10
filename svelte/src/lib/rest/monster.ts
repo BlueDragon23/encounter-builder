@@ -78,3 +78,20 @@ export async function getMonsters(
 		return data;
 	}
 }
+
+export async function createMonster(
+	monster: components['schemas']['TemplateCreature'],
+	fetch: SvelteFetch
+): Promise<ExistingTemplateCreature> {
+	const { data, error } = await client.POST('/monsters', {
+		body: monster,
+		fetch
+	});
+	if (error) {
+		console.error(error);
+	}
+	if (!data) {
+		throw new Error('Expected created monster, but found nothing');
+	}
+	return <ExistingTemplateCreature>data;
+}
