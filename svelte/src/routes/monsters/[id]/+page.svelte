@@ -1,12 +1,10 @@
 <script lang="ts">
-	import type { components } from '$lib/generated/client';
 	import MonsterDetailsCard from '$lib/monsters/MonsterDetailsCard.svelte';
+	import type { ExistingTemplateCreature } from '$lib/monsters/types';
 
-	export let data: Promise<components['schemas']['TemplateCreature']>;
+	export let data: Promise<ExistingTemplateCreature>;
 </script>
 
-<div class="p-4">
-	{#await data then loaded}
-		<MonsterDetailsCard details={loaded} />
-	{/await}
-</div>
+{#await data then loaded}
+	<MonsterDetailsCard details={loaded} />
+{/await}

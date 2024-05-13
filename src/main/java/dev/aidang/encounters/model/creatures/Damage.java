@@ -9,10 +9,10 @@ import org.springframework.data.annotation.Id;
  * @param count The number to roll
  * @param damageType The type of damage to deal
  */
-public record Damage(@Id Long id, Die die, int count, DamageType damageType) {
+public record Damage(@Id Long id, Die die, int count, int modifier, DamageType damageType) {
 
-    public Damage(Die die, int count, DamageType damageType) {
-        this(null, die, count, damageType);
+    public Damage(Die die, int count, int modifier, DamageType damageType) {
+        this(null, die, count, modifier, damageType);
     }
 
     public static Builder builder() {
@@ -28,6 +28,7 @@ public record Damage(@Id Long id, Die die, int count, DamageType damageType) {
         private Long id;
         private Die die;
         private int count;
+        private int modifier;
         private DamageType damageType;
 
         private Builder() {
@@ -49,13 +50,18 @@ public record Damage(@Id Long id, Die die, int count, DamageType damageType) {
             return this;
         }
 
+        public Builder withModifier(int modifier) {
+            this.modifier = modifier;
+            return this;
+        }
+
         public Builder withDamageType(DamageType damageType) {
             this.damageType = damageType;
             return this;
         }
 
         public Damage build() {
-            return new Damage(id, die, count, damageType);
+            return new Damage(id, die, count, modifier, damageType);
         }
     }
 }

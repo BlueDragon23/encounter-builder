@@ -132,13 +132,13 @@ class TemplateCreatureServiceTest {
                 softly.assertThat(templateCreature.abilityScores()).isEqualTo(new AbilityScores(14, 20, 14, 6, 10, 6));
                 Attack first = Attack.builder()
                         .withName("Slam")
-                        .withDamage(List.of(new Damage(Die.D8, 2, DamageType.BLUDGEONING)))
+                        .withDamage(List.of(new Damage(Die.D8, 2, 0, DamageType.BLUDGEONING)))
                         .withDescription("Two slam attacks as an Attack action")
                         .withRange("Melee (5 ft)")
                         .build();
                 Attack second = Attack.builder()
                         .withName("Whirlwind (Recharge 4-6)")
-                        .withDamage(List.of(new Damage(Die.D8, 3, DamageType.BLUDGEONING)))
+                        .withDamage(List.of(new Damage(Die.D8, 3, 0, DamageType.BLUDGEONING)))
                         .withDescription(
                                 "Str save; fail\u2015 flung 20 ft random direction, prone; success\u2015 half damage")
                         .withRange("All in shared area")
@@ -161,20 +161,20 @@ class TemplateCreatureServiceTest {
                 softly.assertThat(templateCreature.name()).isEqualTo("Tyrannosaurus Rex");
                 softly.assertThat(templateCreature.creatureSize()).isEqualTo(CreatureSize.HUGE);
                 softly.assertThat(templateCreature.armorClass()).isEqualTo(13);
-                softly.assertThat(templateCreature.hitDice()).isEqualTo(new Dice(Die.D12, 13));
+                softly.assertThat(templateCreature.hitDice()).isEqualTo(new Dice(Die.D12, 13, 0));
                 softly.assertThat(templateCreature.hitpoints()).isEqualTo(136);
                 //            softly.assertThat(templateCreature.speed()).isEqualTo(new Speed(50));
                 softly.assertThat(templateCreature.abilityScores()).isEqualTo(new AbilityScores(25, 10, 19, 2, 12, 9));
                 Attack first = Attack.builder()
                         .withName("Bite")
-                        .withDamage(List.of(new Damage(Die.D12, 4, DamageType.PIERCING)))
+                        .withDamage(List.of(new Damage(Die.D12, 4, 0, DamageType.PIERCING)))
                         .withDescription(
                                 "Medium or smaller target is grappled and restrained (escape DC 17); Can't use bite again until grapple ends")
                         .withRange("Melee (10 ft)")
                         .build();
                 Attack second = Attack.builder()
                         .withName("Tail")
-                        .withDamage(List.of(new Damage(Die.D8, 3, DamageType.BLUDGEONING)))
+                        .withDamage(List.of(new Damage(Die.D8, 3, 0, DamageType.BLUDGEONING)))
                         .withDescription("One bite and one tail attack to different targets as an Attack action")
                         .withRange("Melee (10 ft)")
                         .build();

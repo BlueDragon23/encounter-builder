@@ -20,7 +20,7 @@ public class TestUtils {
                 .withCreatureSize(CreatureSize.HUGE)
                 .withArmorClass(19)
                 .withHitpoints(195)
-                .withHitDice(new Dice(Die.D12, 17))
+                .withHitDice(new Dice(Die.D12, 17, 0))
                 .withAlignment("Chaotic Evil")
                 .withSpeed(new Speed(40, 0, 0, 80, 40))
                 .withAbilityScores(new AbilityScores(23, 14, 21, 14, 13, 17))
@@ -30,7 +30,8 @@ public class TestUtils {
                         .withName("Bite")
                         .withRange("Melee (10 ft)")
                         .withDamage(List.of(
-                                new Damage(Die.D10, 2, DamageType.PIERCING), new Damage(Die.D8, 1, DamageType.ACID)))
+                                new Damage(Die.D10, 2, 0, DamageType.PIERCING),
+                                new Damage(Die.D8, 1, 0, DamageType.ACID)))
                         .build()));
     }
 

@@ -64,6 +64,7 @@ CREATE TABLE if not exists template_creature (
      proficiency_bonus int,
      dice_die text,
      dice_count int,
+     dice_modifier int,
      speed_walk int,
      speed_burrow int,
      speed_climb int,
@@ -116,8 +117,9 @@ CREATE TABLE if not exists damage (
 --     TODO: remove this undesirable reverse mapping
      attack int,
      attack_key int,
-     die text NOT NULL,
-     count int NOT NULL,
-     damage_type text NOT NULL,
+     die text,
+     count int,
+     modifier int,
+     damage_type text,
      FOREIGN KEY (attack) REFERENCES attack(id)
 );

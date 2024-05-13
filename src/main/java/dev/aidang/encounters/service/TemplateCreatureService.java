@@ -15,6 +15,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Stream;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -39,7 +40,16 @@ public class TemplateCreatureService {
             List<FifthEditionDatabaseCreature> creatures = JSON.readValue(inputStream, new TypeReference<>() {});
             log.info("Inserting {} creatures into the database", creatures.size());
             templateCreatureRepository.saveAll(creatures.stream()
-                    .map(FifthEditionDatabaseCreature::toTemplateCreature)
+                    .flatMap(fifthEditionDatabaseCreature -> {
+                        try {
+                            return Stream.of(fifthEditionDatabaseCreature.toTemplateCreature());
+                        } catch (RuntimeException e) {
+                            log.error("Failed to import creature {}", fifthEditionDatabaseCreature.name(), e);
+                            throw new IllegalStateException(
+                                    "Failed to import creature %s".formatted(fifthEditionDatabaseCreature.name()), e);
+                            //                            return Stream.empty();
+                        }
+                    })
                     .toList());
         } catch (IOException e) {
             log.error("Failed to import creatures from SRD", e);

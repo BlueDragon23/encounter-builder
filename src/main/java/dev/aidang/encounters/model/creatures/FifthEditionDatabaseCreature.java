@@ -6,6 +6,7 @@ import com.fasterxml.jackson.databind.PropertyNamingStrategies;
 import com.fasterxml.jackson.databind.annotation.JsonNaming;
 import dev.aidang.encounters.model.Dice;
 import java.util.List;
+import java.util.Locale;
 import java.util.Optional;
 import java.util.function.Function;
 import java.util.stream.Stream;
@@ -90,12 +91,13 @@ public record FifthEditionDatabaseCreature(
 
     // TODO: so many fields
     @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
-    public record Action(String name, String desc, int attackBonus) {
+    public record Action(String name, String desc, int attackBonus, List<ActionDamage> damage) {
         public Attack toAttack() {
             return Attack.builder()
                     .withName(name)
                     .withDescription(desc)
                     .withAttackType(AttackType.ACTION)
+                    .withDamage(safeTransform(damage, ActionDamage::toDamage))
                     .build();
         }
 
@@ -104,7 +106,30 @@ public record FifthEditionDatabaseCreature(
                     .withName(name)
                     .withDescription(desc)
                     .withAttackType(AttackType.LEGENDARY)
+                    .withDamage(safeTransform(damage, ActionDamage::toDamage))
                     .build();
+        }
+    }
+
+    @JsonNaming(PropertyNamingStrategies.SnakeCaseStrategy.class)
+    public record ActionDamage(DamageType damageType, String damageDice) {
+        public Damage toDamage() {
+            // TODO: the djinni has a choose 1 attack damage, it's insane
+            Damage.Builder builder = Damage.builder();
+            if (damageType != null) {
+                builder.withDamageType(damageType.toDamageType());
+            }
+            if (damageDice != null) {
+                Dice dice = Dice.parse(damageDice);
+                builder.withDie(dice.die()).withCount(dice.count());
+            }
+            return builder.build();
+        }
+    }
+
+    public record DamageType(String index, String name) {
+        public dev.aidang.encounters.model.creatures.DamageType toDamageType() {
+            return dev.aidang.encounters.model.creatures.DamageType.valueOf(index.toUpperCase(Locale.ENGLISH));
         }
     }
 

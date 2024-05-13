@@ -9,7 +9,7 @@
 
 	let inputValue = '';
 	let inputChip: InputChip;
-	let selectedValues: string[];
+	export let selectedValues: string[] = [];
 	export let name: string;
 	export let label: string;
 	export let options: AutocompleteOption<string>[];

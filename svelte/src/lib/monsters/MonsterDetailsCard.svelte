@@ -1,7 +1,7 @@
 <!-- Similar to existing Monster layouts. They're good -->
 <script lang="ts">
-	import type { components } from '$lib/generated/client';
 	import MonsterStats from './MonsterStats.svelte';
+	import type { ExistingTemplateCreature } from './types';
 
 	const formatter = new Intl.NumberFormat(undefined, {
 		signDisplay: 'always'
@@ -14,12 +14,15 @@
 		return '';
 	}
 
-	export let details: components['schemas']['TemplateCreature'];
+	export let details: ExistingTemplateCreature;
 </script>
 
-<div id={details.id?.toString()}>
+<div id={details.id.toString()}>
 	<!-- Name, size, alignment -->
-	<h1 class="h1">{details.name}</h1>
+	<div class="flex justify-between">
+		<h1 class="h1">{details.name}</h1>
+		<a class="btn variant-filled-primary" href="/monsters/${details.id}/edit">Edit</a>
+	</div>
 	<i>{details.creatureSize}, {details.alignment}</i>
 	<div class="flex justify-between">
 		<p>Challenge Rating: <b>{details.challengeRating}</b></p>
@@ -82,7 +85,7 @@
 
 	<!-- Saving throws, proficiencies -->
 	<ul>
-		{#if details.savingThrows}
+		{#if details.savingThrows && details.savingThrows.length > 0}
 			<li>Saving Throw Proficiencies: {details.savingThrows.join(', ')}</li>
 		{/if}
 	</ul>

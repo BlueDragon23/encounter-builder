@@ -59,14 +59,18 @@ export interface components {
       die?: "D3" | "D4" | "D6" | "D8" | "D10" | "D12" | "D20" | "D100";
       /** Format: int32 */
       count?: number;
+      /** Format: int32 */
+      modifier?: number;
       /** @enum {string} */
-      damageType?: "SLASHING" | "PIERCING" | "BLUDGEONING" | "POISON" | "ACID" | "FIRE" | "COLD" | "RADIANT" | "NECROTIC" | "LIGHTNING" | "THUNDER" | "FORCE" | "PYSCHIC";
+      damageType?: "SLASHING" | "PIERCING" | "BLUDGEONING" | "POISON" | "ACID" | "FIRE" | "COLD" | "RADIANT" | "NECROTIC" | "LIGHTNING" | "THUNDER" | "FORCE" | "PSYCHIC";
     };
     Dice: {
       /** @enum {string} */
       die?: "D3" | "D4" | "D6" | "D8" | "D10" | "D12" | "D20" | "D100";
       /** Format: int32 */
       count?: number;
+      /** Format: int32 */
+      modifier?: number;
     };
     SpecialAbility: {
       name?: string;
@@ -143,23 +147,23 @@ export interface components {
       pageable?: components["schemas"]["PageableObject"];
       /** Format: int32 */
       numberOfElements?: number;
+      first?: boolean;
+      last?: boolean;
       /** Format: int32 */
       size?: number;
       content?: components["schemas"]["TemplateCreatureSummary"][];
       /** Format: int32 */
       number?: number;
       sort?: components["schemas"]["SortObject"][];
-      first?: boolean;
-      last?: boolean;
       empty?: boolean;
     };
     PageableObject: {
       /** Format: int32 */
+      pageSize?: number;
+      /** Format: int32 */
       pageNumber?: number;
       paged?: boolean;
       unpaged?: boolean;
-      /** Format: int32 */
-      pageSize?: number;
       /** Format: int64 */
       offset?: number;
       sort?: components["schemas"]["SortObject"][];
@@ -203,14 +207,14 @@ export interface components {
       pageable?: components["schemas"]["PageableObject"];
       /** Format: int32 */
       numberOfElements?: number;
+      first?: boolean;
+      last?: boolean;
       /** Format: int32 */
       size?: number;
       content?: components["schemas"]["EncounterSummary"][];
       /** Format: int32 */
       number?: number;
       sort?: components["schemas"]["SortObject"][];
-      first?: boolean;
-      last?: boolean;
       empty?: boolean;
     };
   };

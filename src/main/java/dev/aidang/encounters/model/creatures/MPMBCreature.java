@@ -41,7 +41,7 @@ public record MPMBCreature(
                 .withType(type)
                 .withAlignment(alignment)
                 .withArmorClass(ac)
-                .withHitDice(new Dice(Die.fromInteger(hd().get(1)), hd().get(0)))
+                .withHitDice(new Dice(Die.fromInteger(hd().get(1)), hd().get(0), 0))
                 // TODO: maybe fix this
                 .withSpeed(new Speed(30))
                 .withAbilityScores(new AbilityScores(
@@ -74,6 +74,7 @@ public record MPMBCreature(
                     .withDamage(List.of(new Damage(
                             Die.fromInteger(Integer.parseInt(damage.get(1))),
                             Integer.parseInt(damage.get(0)),
+                            0,
                             damageType)))
                     .withRange(range)
                     .build();
