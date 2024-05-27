@@ -8,7 +8,8 @@
 </script>
 
 <h1 class="h1 mb-4 ml-4">Edit Monster</h1>
-<form action="post">
+<form method="post">
+	<input type="text" class="input hidden" hidden value={data.creature.id} />
 	<Accordion>
 		<AccordionItem open>
 			<svelte:fragment slot="summary"><h2 class="h2">Monster Attributes</h2></svelte:fragment>

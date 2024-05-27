@@ -6,6 +6,7 @@ export const actions = {
 	default: async ({ fetch, request }) => {
 		const data = await request.formData();
 		// TODO: validation, limits
+		// TODO: extract this for use in edit monster
 		const created = await createMonster(
 			{
 				name: getField(data, 'name'),

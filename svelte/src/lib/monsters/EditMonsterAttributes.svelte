@@ -123,7 +123,7 @@
 		value={creature?.alignment ?? 'neutral'}
 		options={alignmentOptions}
 	/>
-	<NumberInput name="armorClass" label="Armor Class" min={0} value={creature?.armorClass ?? '10'} />
+	<NumberInput name="armorClass" label="Armor Class" min={0} value={creature?.armorClass ?? 10} />
 	<NumberInput
 		name="hitpoints"
 		label="Average Hitpoints"

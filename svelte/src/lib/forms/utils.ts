@@ -1,3 +1,5 @@
+import type { components } from '$lib/generated/client';
+
 export function getField(formData: FormData, name: string): string {
 	// TODO: error handling
 	return <string>formData.get(name);
@@ -16,18 +18,26 @@ export function oneOf<T>(value: string, allowedValues: T[]): T | undefined {
 	}
 }
 
-export const damageTypeOptions = [
-	{ label: 'bludgeoning', value: 'bludgeoning', keywords: 'physical' },
-	{ label: 'piercing', value: 'piercing', keywords: 'physical' },
-	{ label: 'slashing', value: 'slashing', keywords: 'physical' },
-	{ label: 'lightning', value: 'lightning' },
-	{ label: 'thunder', value: 'thunder' },
-	{ label: 'poison', value: 'poison' },
-	{ label: 'cold', value: 'cold' },
-	{ label: 'radiant', value: 'radiant' },
-	{ label: 'fire', value: 'fire' },
-	{ label: 'necrotic', value: 'necrotic' },
-	{ label: 'acid', value: 'acid' },
-	{ label: 'psychic', value: 'psychic' },
-	{ label: 'force', value: 'force' }
+export interface SelectOptions<T> {
+	label: string;
+	value: T;
+	keywords?: string;
+}
+
+export const damageTypeOptions: SelectOptions<
+	Exclude<components['schemas']['Damage']['damageType'], undefined>
+>[] = [
+	{ label: 'bludgeoning', value: 'BLUDGEONING', keywords: 'physical' },
+	{ label: 'piercing', value: 'PIERCING', keywords: 'physical' },
+	{ label: 'slashing', value: 'SLASHING', keywords: 'physical' },
+	{ label: 'lightning', value: 'LIGHTNING' },
+	{ label: 'thunder', value: 'THUNDER' },
+	{ label: 'poison', value: 'POISON' },
+	{ label: 'cold', value: 'COLD' },
+	{ label: 'radiant', value: 'RADIANT' },
+	{ label: 'fire', value: 'FIRE' },
+	{ label: 'necrotic', value: 'NECROTIC' },
+	{ label: 'acid', value: 'ACID' },
+	{ label: 'psychic', value: 'PSYCHIC' },
+	{ label: 'force', value: 'FORCE' }
 ];
